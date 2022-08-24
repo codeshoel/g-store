@@ -1,0 +1,87 @@
+{% extends '../../incs/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% include './auth-navbar.html' %}
+
+    <div class="container-fluid d-flex justify-content-center">
+        <div class="col-md-6 my-5">
+            <div class="card my-5">
+                <div class="card-body">
+                    <div class="msg"></div>
+                    <form class="registration">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.first_name.label }}
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.last_name.label }}
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                        </div>
+                        <p></p>
+                        <br/>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.email.label }}
+                                    {{ form.email }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.mobile.label }}
+                                    {{ form.mobile }}
+                                </div>
+                            </div>
+                        </div>
+                        <p></p>
+                        <br/>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ form.address.label }}
+                                    {{ form.address }}
+                                </div>
+                            </div>
+                        </div>
+                        <p></p>
+                        <br/>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.password1.label }}
+                                    {{ form.password1 }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.password2.label }}
+                                    {{ form.password2 }}
+                                </div>
+                            </div>
+                        </div>
+                        <p></p>
+                        <br/>
+                        <button 
+                            class="btn registration-btn"
+                            style="
+                            width: 100%; 
+                            margin-bottom: 20px;
+                            padding: 10px; 
+                            border: none;
+                            background-color: #19EDA2;
+                            color: #ffffff;
+                            font-weight: 500"
+                            >
+                            <i class="fa fa-user btn-icon"></i> Register
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% include '../../incs/scripts.html' %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% if products %}
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-3 my-4 bg-light">
+                <a href="{% url 'product_detail_url' pk=product.id %}" style="text-decoration: none;" class="text-secondary">
+                    <div class="card-body shadow">
+                            <span class="text-secondary">
+                                <b>NGN. {{product.productattribute_set.first.price}}</b>
+                            </span>
+                            <img src="{{product.productattribute_set.first.image.url}}" width="150px" height="200px">
+                        <h6 class="" style="margin-bottom: -2px;">{{product.name}}</h6>
+                        <div class="col-md-9 text-warning mb-1" style="font-size: 14px">
+                            <span class="text-secondary"><b>4/5</b></span>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half"></i>
+                        </div>
+                </a>
+                        <div class="card-text">
+                            <button class="btn btn-sm btn-danger" data-id="{{product.id}}">
+                                <i class="fa fa-heart"></i>
+                            </button>
+                            <button class="btn btn-sm btn-primary add-item-to-cart" data-id={{product.id}}>
+                                <i class="fa fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

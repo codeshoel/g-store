@@ -1,0 +1,155 @@
+{% extends '../incs/base.html' %}
+{% load static %}
+{% block title %}Product detail{% endblock %}
+
+{% block content %}
+    {% include "../incs/navbar.html" %}
+
+    <div class="container-fluid my-5">
+        <div class="col-md-12 p-5">
+            <div class="row">
+                <div class="col-md-6 bg-light">
+                    <div class="row">
+                        <h3>{{product_detail.name}}</h3>
+                        <hr/>
+                        <div class="col-md-6 mb-3">
+                            <img src="{{product_detail.productattribute_set.first.image.url}}">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="message alert alert-success" style="display: none;"></div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Colors</th>
+                                            <td>
+                                                <div class="col-md-12">
+                                                    <span class="active-color"></span>
+                                                   <div style="display: flex; align-items: left;">
+                                                    {% for color in colors %}
+                                                        <button 
+                                                            id="choosen-color"
+                                                            data-toggle="tooltip"
+                                                            title="Product {{color.color__name}}"
+                                                            class="
+                                                                btn 
+                                                                btn-sm 
+                                                                mx-1 p-2
+                                                                choosen-color-{{color.color__id}}
+                                                                " 
+                                                            data-color="{{color.color__id}}"
+                                                            product-id="{{product_detail.id}}"
+                                                            style="
+                                                                background-color: {{color.color__color_code}}; 
+                                                                width: 50px !important;
+                                                                border: 1px solid #888;
+                                                                ">
+                                                        </button>
+                                                    {% endfor %}
+                                                    <span class="selected-filter-value" style="display: none;"></span>
+                                                   </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Sizes</th>
+                                            <td>
+                                                <div class="col-md-12">
+                                                   <div class="size-loader" style="display: flex; align-items: left;">
+                                                   {% comment %} sizes are loaded here using ajax request {% endcomment %}
+                                                   </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Price</th>
+                                            <td>
+                                                <b>NGN. <span class="product-price">{{product_detail.productattribute_set.first.price}}</span></b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Quantity</th>
+                                            <td>
+                                                <form id="add-to-cart" data-id="{{product_detail.id}}">
+                                                    <div class="input-group">
+                                                        <input type="hidden" class="product-id-{{product_detail.id}}" value="{{product_detail.id}}" />
+                                                        <input type="hidden" class="product-image-{{product_detail.id}}" value="{{product_detail.productattribute_set.first.image.url}}" />
+                                                        <input type="hidden" class="product-name-{{product_detail.id}}" value="{{product_detail.name}}" />
+                                                        <input type="hidden" class="product-slug-{{product_detail.id}}" value="product-id-{{product_detail.slug}}" />
+                                                        <input type="hidden" class="product-total-price-{{product_detail.id}}" value="{{product_detail.productattribute_set.first.price}}" />
+                                                        <input type="hidden" class="product-color-{{product_detail.id}}" value="{{product_detail.productattribute_set.first.color}}" />
+                                                        <input type="hidden" class="product-size-{{product_detail.id}}" value="{{product_detail.productattribute_set.first.size}}" />
+                                                        <div class="col-md-4">
+                                                            <input type="number" class="product-qty-{{product_detail.id}} form-control" value="1"/>
+                                                        </div>
+                                                        <td>
+                                                            <div class="button-group my-2" style="float: right; display: flex; justify-content: space-between;">
+                                                                <button type="submit" class="btn btn-sm btn-primary mx-1 addtocart-btn" data-product-id="{{product_detail.id}}">
+                                                                    <i class="fa fa-shopping-cart"></i> addTocart
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 my-4">
+                        <h3>Description</h3>
+                        <hr/>
+                        <p>
+                            {% lorem 1 b random %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 bg-light">
+                    <h3>Other amazing related products</h3>
+                    <hr/>
+                    {% if relate_products %}
+                        <div class="row">
+                            {% for relate_product in relate_products %}
+                                <div class="col-md-4">
+                                    <a href="{% url 'product_detail_url' pk=relate_product.id %}" style="text-decoration: none;" class="text-secondary">
+                                        <div class="card-body shadow">
+                                                <span class="text-secondary">
+                                                    <b>NGN. {{relate_product.productattribute_set.first.price}}</b>
+                                                </span>
+                                                <img src="{{relate_product.productattribute_set.first.image.url}}" width="100px" height="150px">
+                                            <h6 class="" style="margin-bottom: -2px;">{{relate_product.name}}</h6>
+                                            <div class="col-md-9 text-warning mb-1" style="font-size: 14px">
+                                                <span class="text-secondary">
+                                                    <b>4/5</b>
+                                                </span>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-half"></i>
+                                            </div>
+                                            <div class="card-text">
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-heart"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% comment %} related product end {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '../incs/footer.html' %}
+{% endblock %}

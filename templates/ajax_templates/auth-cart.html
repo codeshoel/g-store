@@ -1,0 +1,244 @@
+{% load mathfilters %}
+<div class="col-md-12 p-5">
+    <div class="row">
+        <div class="col-md-7 p-3 bg-light mb-5 shadow">
+            <h4>Your Order 
+                <i class="fa fa-shopping-basket fa-lg"></i>
+                {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+                    <small class="badge bg-danger">{{total_cart_item}}</small>
+                {% comment %} {% endif %} {% endcomment %}
+            </h4>
+            <hr/>
+            <div class="row">
+                
+                {% comment %} {% if user.is_authenticated %} {% endcomment %}
+                    {% if cart_data %}
+                        {% comment %} 
+                        displaying product saved from the cart 
+                        table in the database for authenticated 
+                        user.
+                        {% endcomment %}
+                        {% for product in cart_data %}
+                            <div class="col-md-2">
+                                <img src="{{product.image}}" alt="{{product.name}}" width="80" />
+                            </div>
+                            <div class="col-md-7 text-secondary">
+                                <p>
+                                    <small><b>{{product.name}}</b></small><br/>
+                                    <small>Category: {{product.category}}</small><br/>
+                                    <small>
+                                        Color: {{product.color}}
+                                    </small><br/>
+                                    <small>
+                                        Sizes: {{product.size}}
+                                    </small><br/>
+                                    <small>
+                                        
+                                    </small><br/>
+                                    <small>
+                                        Unit Prices: <b>NGN. {{product.price}}</b>
+                                    </small>
+                                    <br/>
+                                    <button class="btn btn-sm text-secondary 
+                                        remove 
+                                        remove-item-cart-{{product.id}}"
+                                        data-id="{{product.p_id}}" 
+                                        style="font-size: 12px;">
+                                        <i class="fa fa-trash"></i> Remove
+                                    </button>
+                                    |
+                                    <button class="btn btn-sm text-secondary" style="font-size: 12px;">
+                                        <i class="fa fa-heart"></i> Move to wish list
+                                    </button>
+                                </p>
+                                {% comment %} <hr/> {% endcomment %}
+                            
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-7">
+                                    <input 
+                                    type="number" 
+                                    class="form-control edit-qty-input-{{product.p_id}}" 
+                                    id="edit-qty-input"
+                                    data-id="{{product.p_id}}"
+                                    data-color="{{product.color}}"
+                                    value="{{product.qty}}" 
+                                    disabled 
+                                    />
+                                </div>
+                                {% comment %} {% if user.is_authenticate %} {% endcomment %}
+                                <i 
+                                    class="fa fa-edit text-primary edit-qty-btn-{{product.p_id}}" 
+                                    data-toggle="tooltip"
+                                    title="edit item quantity"
+                                    id="edit-qty-btn"
+                                    data-id="{{product.p_id}}"
+                                    style="
+                                            position: absolute; 
+                                            margin-top: -20px;
+                                            margin-left: 76px; 
+                                            padding: 5px; 
+                                            cursor: pointer;
+                                            display: block;
+                                    ">
+                                </i>
+                                <i 
+                                    class="fa fa-check-circle text-success apply-qty-changes-{{product.p_id}}" 
+                                    data-toggle="tooltip"
+                                    title="apply change"
+                                    id="apply-qty-changes"
+                                    data-id="{{product.p_id}}"
+                                    style="
+                                            position: absolute; 
+                                            margin-top: -20px;
+                                            margin-left: 76px; 
+                                            padding: 5px; 
+                                            cursor: pointer;
+                                            display: none;
+                                    ">
+                                </i>
+                                {% comment %} {% endif %} {% endcomment %}
+                                <small class="text-secondary product-price">(<i>2 left</i>)</small><br/>
+                                {% with price=product.price  %}
+                                    
+                                    <h5 class="text-secondary product-price">
+                                        NGN. {{ price|mul:product.qty }}
+                                    </h5>
+                                {% endwith %}
+                            </div>
+                        {% endfor %}
+
+
+                    {% else %}
+                        <h4>Your Shopping Basket is Empty</h4>
+                        <small>Navigate through the store I promise you will find something you love!</small>
+                    {% endif %}
+                
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <div class="row bg-light p-3 shadow">
+                <h4>Total</h4>
+                <hr/>
+                <table class="table text-secondary" style="border: none !important; border-bottom: 2px solid #fff !important;">
+                    <tbody>
+                        <tr>
+                            <td>Subtotal</td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span>NGN. {{total_amt}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Delivery</td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span>Free</span></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><b>NGN. {{total_amt}}</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <div class="col-md-11">
+                    <form action="{% url 'charge_url' %}" method="post" id="payment-form">
+                        {% csrf_token %}
+                        <div class="form-row">
+                          <label for="card-element">
+                            Credit or debit card
+                          </label>
+                          <div id="card-element">
+                            <!-- A Stripe Element will be inserted here. -->
+                          </div>
+                      
+                          <!-- Used to display Element errors. -->
+                          <div id="card-errors" role="alert"></div>
+                        
+                            <button
+                                class="btn shadow"
+                                style="
+                                width: 100%; 
+                                margin: 10px; 
+                                margin-bottom: 20px;
+                                padding: 10px; 
+                                border: none;
+                                background-color: #19EDA2;
+                                color: #ffffff;
+                                font-weight: 500
+                                ">
+                                <i class="fa fa-credit-card"></i> GO TO CHECKOUT
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// Set your publishable key: remember to change this to your live publishable key in production
+// See your keys here: https://dashboard.stripe.com/apikeys
+var stripe = Stripe('pk_test_XPJ2TBBGoq03EM8s8w3RFXiE');
+var elements = stripe.elements();
+
+
+// Custom styling can be passed to options when creating an Element.
+var style = {
+  base: {
+    // Add your base input styles here. For example:
+    fontSize: '16px',
+    color: '#32325d',
+  },
+};
+
+
+
+// Create an instance of the card Element.
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+card.mount('#card-element');
+
+
+
+
+// Create a token or display an error when the form is submitted.
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the customer that there was an error.
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server.
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+
+
+
+function stripeTokenHandler(token) {
+    // Insert the token ID into the form so it gets submitted to the server
+    var form = document.getElementById('payment-form');
+    var hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute('type', 'hidden');
+    hiddenInput.setAttribute('name', 'stripeToken');
+    hiddenInput.setAttribute('value', token.id);
+    form.appendChild(hiddenInput);
+  
+    // Submit the form
+    form.submit();
+  }
+
+</script>

@@ -1,0 +1,17 @@
+{% for size in sizes %}
+<button 
+    class="
+    btn btn-sm 
+    btn-secondary 
+    mx-1
+    choosen-size-{{size.product}}
+    "
+    id="choosen-size"
+    data-size="{{size.size__name}}"
+    data-product-id="{{size.product}}"
+    data-size-price="{{size.price}}"
+    data-color="{{size.color__name}}"
+    >
+    {{size.size__name}}
+</button>
+{% endfor %}

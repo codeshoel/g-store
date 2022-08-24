@@ -1,0 +1,36 @@
+{% extends '../incs/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% include "../incs/navbar.html" %}
+
+    <div class="container-fluid">
+        <div class="col-md-12 p-5">
+            <div class="row my-5">
+                <div class="col-md-8" id="product_loader">
+                    {% comment %} products are loadered here using ajax {% endcomment %}
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">Categories</div>
+                        <div class="card-body">
+                            
+                        </div>
+                        <p></p>
+                        <div class="card-header">Shopping filter</div>
+                            <div class="card-body">
+                                
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '../incs/footer.html' %}
+{% endblock %}
+
+
+
+

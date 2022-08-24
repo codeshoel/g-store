@@ -1,0 +1,42 @@
+{% extends '../../incs/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% include './auth-navbar.html' %}
+
+    <div class="container-fluid my-5 d-flex justify-content-center">
+        <div class="col-md-3" style="margin-top: 8%;">
+            <div class="card">
+                <div class="card-body">
+                    <h3>G-store</h3>
+                    <form id="loginForm">
+                        <div class="msg col"></div>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{form.as_p}}
+                        </div>
+                        <button 
+                            class="btn"
+                            id="login-btn"
+                            style="
+                            width: 100%; 
+                            margin-bottom: 20px;
+                            padding: 10px; 
+                            border: none;
+                            background-color: #19EDA2;
+                            color: #ffffff;
+                            font-weight: 500"
+                            >
+                            <i class="fa fa-lock"></i> LogIn
+                        </button>
+                    </form>
+                    <small class="text-secondary">g-store &copy; 2022</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% include '../../incs/scripts.html' %}
+{% endblock %}

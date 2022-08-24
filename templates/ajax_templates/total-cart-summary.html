@@ -1,0 +1,62 @@
+<h4>Total</h4>
+                        <hr/>
+                        <table class="table text-secondary" style="border: none !important; border-bottom: 2px solid #fff !important;">
+                            <tbody>
+                                <tr>
+                                    <td>Subtotal</td> 
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><span>NGN. {{total_amt}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Delivery</td> 
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><span>Free</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td> 
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>NGN. {{total_amt}}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-md-11">
+                            {% if user.is_authenticated %}
+                                <a 
+                                    href="#"
+                                    class="btn shadow"
+                                    style="
+                                    width: 100%; 
+                                    margin: 10px; 
+                                    margin-bottom: 20px;
+                                    padding: 10px; 
+                                    border: none;
+                                    background-color: #19EDA2;
+                                    color: #ffffff;
+                                    font-weight: 500
+                                    ">
+                                    <i class="fa fa-credit-card"></i> GO TO CHECKOUT
+                                </a>
+                            {% else %}
+                                <a 
+                                    href="{% url 'login_url' %}"
+                                    class="btn shadow"
+                                    style="
+                                    width: 100%; 
+                                    margin: 10px; 
+                                    margin-bottom: 20px;
+                                    padding: 10px; 
+                                    border: none;
+                                    background-color: #19EDA2;
+                                    color: #ffffff;
+                                    font-weight: 500
+                                    ">
+                                    <i class="fa fa-credit-card"></i> GO TO CHECKOUT
+                                </a>
+                            {% endif %}
+                        </div>
