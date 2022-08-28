@@ -128,7 +128,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><span>NGN. {{total_amt}}</span></td>
+                            <td><span>${{total_amt}}</span></td>
                         </tr>
                         <tr>
                             <td>Delivery</td> 
@@ -142,39 +142,44 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><b>NGN. {{total_amt}}</b></td>
+                            <td><b>${{total_amt}}</b></td>
                         </tr>
                     </tbody>
                 </table>
                 <hr/>
                 <div class="col-md-11">
+                    {% include '../pages/messages.html' %} 
                     <form action="{% url 'charge_url' %}" method="post" id="payment-form">
-                        {% csrf_token %}
                         <div class="form-row">
-                          <label for="card-element">
-                            Credit or debit card
-                          </label>
-                          <div id="card-element">
-                            <!-- A Stripe Element will be inserted here. -->
-                          </div>
-                      
-                          <!-- Used to display Element errors. -->
-                          <div id="card-errors" role="alert"></div>
-                        
-                            <button
-                                class="btn shadow"
-                                style="
-                                width: 100%; 
-                                margin: 10px; 
-                                margin-bottom: 20px;
-                                padding: 10px; 
-                                border: none;
-                                background-color: #19EDA2;
-                                color: #ffffff;
-                                font-weight: 500
-                                ">
-                                <i class="fa fa-credit-card"></i> GO TO CHECKOUT
-                            </button>
+                            {% if total_cart_item > 0 %}
+                            <label for="card-element">
+                                Credit or Debit Card
+                              </label>
+                              <div id="card-element">
+                                <!-- A Stripe Element will be inserted here. -->
+                              </div>
+                          
+                              <!-- Used to display Element errors. -->
+                              <div id="card-errors" role="alert"></div>
+    
+                              <!-- csrftoken loadered here for form cross-site-request-forgery token validation -->
+                              <input type="hidden" name="csrfmiddlewaretoken" id="csrftoken-input" />
+                              <input type="hidden" name="amount" value="{{total_amt}}" />
+                                <button
+                                    class="btn shadow"
+                                    style="
+                                    width: 100%; 
+                                    margin: 10px; 
+                                    margin-bottom: 20px;
+                                    padding: 10px; 
+                                    border: none;
+                                    background-color: #19EDA2;
+                                    color: #ffffff;
+                                    font-weight: 500
+                                    ">
+                                    <i class="fa fa-credit-card"></i> GO TO CHECKOUT
+                                </button>
+                            {% endif %}
                         </div>
                     </form>
                 </div>
@@ -240,5 +245,27 @@ function stripeTokenHandler(token) {
     // Submit the form
     form.submit();
   }
+
+
+
+    // JavaScript function to get cookie by name; retrieved from https://docs.djangoproject.com/en/3.1/ref/csrf/
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+    //insert django csrftoken into hidden input for form submission processing.
+    $("#csrftoken-input").val(getCookie('csrftoken'));
 
 </script>

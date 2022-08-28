@@ -1,13 +1,16 @@
+from email import message
 import uuid
+from django.contrib import messages
 from django.shortcuts import redirect, render, HttpResponse
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib.sessions.models import Session
 from django.contrib.auth import authenticate, login, logout
 
-from .models import AppUser, Product, ProductAttribute, Cart
+from .models import AppUser, Product, ProductAttribute, Cart, Order
 from .forms import AppUserRegistrationForm, AppUserLoginForm
 
+import stripe
 
 
 
@@ -339,9 +342,65 @@ def user_registration(request):
 
 
 def charge_user_cart(request):
-    amount = 5
     if request.method == "POST":
-        print('Data:', request.POST)
+
+        try:
+            stripe.api_key = "sk_test_Up6yIWJ3o1eYyTAEtkqjTIQV"
+
+            # fetch logged in customer data for from g-store server
+            customer_data = AppUser.objects.get(id=request.user.id)
+
+
+            amount = int(request.POST['amount']) * 100
+            
+            customer = stripe.Customer.create(
+                description = "Sales from g-store",
+                name = customer_data,
+                email= customer_data.email,
+                phone = customer_data.mobile,
+                source = request.POST['stripeToken'],
+            )
+
+            charge = stripe.Charge.create(
+                customer = customer,
+                amount = amount,
+                currency = "usd",
+                description = "G-store order",
+            )
+            if charge.create:
+                # add all items to order, if customer payment is successful
+                cart_items = Cart.objects.filter(fk=request.user)
+                for item in cart_items:
+                    newOrder = Order.objects.create(
+                        fk=request.user, 
+                        p_id = item.p_id,
+                        name=item.name, 
+                        qty=item.qty, 
+                        size=item.size,
+                        color=item.color,
+                        price=item.price,
+                        image=item.image
+                        )
+                    cart_items = Cart.objects.get(fk=request.user, p_id=item.p_id)
+                    cart_items.delete() #Delete Cart paid itmes
+
+                newOrder.save()
+                msg = messages.success(request, "Order was processed successfully...!")
+                return render(request, 'pages/messages.html', {'messages':msg})
+        except stripe.error.CardError as e:
+            msg = messages.error(request, f"A payment error occurred: {e.user_message}")
+            return render(request, 'pages/messages.html', {'messages':msg})
+        except stripe.error.APIConnectionError:
+            msg = messages.error(request, "G-store could not make connection to her payment Gateway")
+            return render(request, 'pages/messages.html', {'messages':msg})
+        except stripe.error.InvalidRequestError:
+            # stripe token expired
+            #stripe response: You cannot use a Stripe token more than once
+            msg = messages.error(request, "Purchase token expired, please try again")
+            return render(request, 'pages/messages.html', {'messages':msg})
+            
+
+
     return render(request, 'pages/cart.html', {})
 
 

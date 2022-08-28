@@ -143,6 +143,27 @@ class Cart(models.Model):
 
 
 
+class Order(models.Model):
+    class Meta:
+        verbose_name = "Oder"
+
+    fk = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    p_id = models.PositiveBigIntegerField(verbose_name="product id")
+    name = models.CharField(max_length=150, null=True)
+    qty = models.CharField(max_length=150, null=True)
+    size = models.CharField(max_length=50, null=True)
+    color = models.CharField(max_length=50, null=True)
+    price = models.PositiveIntegerField(null=True)
+    image = models.ImageField(null=True)
+
+
+    def __str__(self):
+        return self.name
+
+
+    def image_tag(self):
+        return mark_safe("<img src='%s' width='50px' height='50px' />" %(self.image))
+
 
 
 

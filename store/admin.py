@@ -9,6 +9,7 @@ from .models import (
     VAT, 
     AppUser,
     Cart,
+    Order
     )
 
 
@@ -48,6 +49,10 @@ admin.site.register(AppUser, AppUserAdmin)
 class CartAdmin(admin.ModelAdmin):
     list_display = ("id", "fk", "p_id", "name", "image_tag", "size", "color", "qty", "price")
 admin.site.register(Cart, CartAdmin)
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("id", "fk", "p_id", "name", "image_tag", "size", "color", "qty", "price")
+admin.site.register(Order, OrderAdmin)
 
 # admin.site.unregister(Group)
 
