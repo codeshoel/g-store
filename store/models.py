@@ -155,6 +155,8 @@ class Order(models.Model):
     color = models.CharField(max_length=50, null=True)
     price = models.PositiveIntegerField(null=True)
     image = models.ImageField(null=True)
+    status = models.PositiveIntegerField(null=True, default=0)
+    date = models.DateField(auto_now_add=True, null=True)
 
 
     def __str__(self):

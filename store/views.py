@@ -191,7 +191,7 @@ def update_cart_item(request):
 
             context = {
                 'cart_data': cart_data, 
-                'total_amt': total_amt, 
+                 'total_amt': total_amt, 
                 'total_cart_item': cart_data.count(),
                 }
             t = render_to_string('ajax_templates/auth-cart.html', context)
@@ -341,6 +341,7 @@ def user_registration(request):
     return render(request, 'pages/registration/signup.html', {"form":form})
 
 
+# using stripe as payment gateway
 def charge_user_cart(request):
     if request.method == "POST":
 
@@ -371,33 +372,47 @@ def charge_user_cart(request):
                 # add all items to order, if customer payment is successful
                 cart_items = Cart.objects.filter(fk=request.user)
                 for item in cart_items:
-                    newOrder = Order.objects.create(
-                        fk=request.user, 
-                        p_id = item.p_id,
-                        name=item.name, 
-                        qty=item.qty, 
-                        size=item.size,
-                        color=item.color,
-                        price=item.price,
-                        image=item.image
-                        )
-                    cart_items = Cart.objects.get(fk=request.user, p_id=item.p_id)
-                    cart_items.delete() #Delete Cart paid itmes
 
-                newOrder.save()
+                    existing_order = Order.objects.filter(fk=request.user, p_id=item.p_id)
+                    # checks if user has pending items already exist in the db order table
+                    # if True update exist order by adding new order qty to existing order qty
+                    # and then multiply new order price by existing new order qty.
+                    # else add new order to existing order 
+                    if existing_order.exists():
+                        for order in existing_order:
+                            order.qty = int(order.qty)+int(item.qty)
+                            order.price = int(item.price)*order.qty
+                        cart_items = Cart.objects.get(fk=request.user, p_id=order.p_id)
+                        cart_items.delete() #Delete successfully purchased items from cart
+                        order.save()
+                    else:
+                        newOrder = Order.objects.create(
+                            fk=request.user, 
+                            p_id = item.p_id,
+                            name=item.name, 
+                            qty=item.qty, 
+                            size=item.size,
+                            color=item.color,
+                            price=item.price,
+                            image=item.image
+                            )
+                        cart_items = Cart.objects.get(fk=request.user, p_id=item.p_id)
+                        cart_items.delete() #Delete successfully purchased items from cart
+
+                        newOrder.save()
                 msg = messages.success(request, "Order was processed successfully...!")
-                return render(request, 'pages/messages.html', {'messages':msg})
+                return render(request, 'pages/cart.html', {'messages':msg})
         except stripe.error.CardError as e:
-            msg = messages.error(request, f"A payment error occurred: {e.user_message}")
-            return render(request, 'pages/messages.html', {'messages':msg})
+            msg = messages.error(request, f"A payment error occurred: {e.user_message}.")
+            return render(request, 'pages/cart.html', {'messages':msg})
         except stripe.error.APIConnectionError:
-            msg = messages.error(request, "G-store could not make connection to her payment Gateway")
-            return render(request, 'pages/messages.html', {'messages':msg})
+            msg = messages.error(request, "G-store could not make connection to her payment Gateway.")
+            return render(request, 'pages/cart.html', {'messages':msg})
         except stripe.error.InvalidRequestError:
             # stripe token expired
             #stripe response: You cannot use a Stripe token more than once
-            msg = messages.error(request, "Purchase token expired, please try again")
-            return render(request, 'pages/messages.html', {'messages':msg})
+            msg = messages.error(request, "Purchase token expired, please try again.")
+            return render(request, 'pages/cart.html', {'messages':msg})
             
 
 

@@ -51,7 +51,7 @@ class CartAdmin(admin.ModelAdmin):
 admin.site.register(Cart, CartAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ("id", "fk", "p_id", "name", "image_tag", "size", "color", "qty", "price")
+    list_display = ("id", "fk", "p_id", "name", "image_tag", "size", "color", "qty", "price", "status", "date")
 admin.site.register(Order, OrderAdmin)
 
 # admin.site.unregister(Group)

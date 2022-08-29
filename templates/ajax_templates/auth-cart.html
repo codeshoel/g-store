@@ -148,7 +148,6 @@
                 </table>
                 <hr/>
                 <div class="col-md-11">
-                    {% include '../pages/messages.html' %} 
                     <form action="{% url 'charge_url' %}" method="post" id="payment-form">
                         <div class="form-row">
                             {% if total_cart_item > 0 %}
