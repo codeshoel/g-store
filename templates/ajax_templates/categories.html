@@ -1,0 +1,24 @@
+
+
+
+{% if  categories %}
+{% for category in categories %}
+<div class="categories-container" style="display: block;">
+    <input 
+        type="checkbox" 
+        name="{{category.name}}"
+        id="{{category.name}}" 
+        class="filter-checkbox" 
+        value="{{category.name}}"
+        data-filter="category"
+            />
+    <label for="{{category.name}}">{{category.name}}</label>
+    <hr/>
+</div>
+    {% endfor %}
+{% else %}
+    <p>We have nothing to display</p>
+{% endif %}
+    
+
+

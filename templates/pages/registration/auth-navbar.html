@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'home_url' %}">G-store</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,16 +7,34 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="col-md-9"></div>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link text-success" href="{% url 'login_url' %}">
-            <i class="fa fa-lock"></i> LogIn instead
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-success" href="{% url 'user_registration_url' %}">
-            <i class="fa fa-user"></i> Register instead
-          </a>
-        </li>
+        {% if request.path == '/login-user/' %}
+
+          <li class="nav-item">
+            <a class="nav-link btn" href="{% url 'user_registration_url' %}"
+            style="
+              background-color: #19EDA2;
+              color: #ffffff;
+              float: right;
+              box-shadow: 0px 3px 5px rgba(0, 0, 0, .3);
+              "
+            >
+              <i class="fa fa-user"></i> Sign Up
+            </a>
+          </li>
+          {% elif request.path == '/user-registration/' %}
+          <li class="nav-item">
+            <a class="nav-link btn" href="{% url 'login_url' %}"
+            style="
+              background-color: #19EDA2;
+              color: #ffffff;
+              float: right;
+              box-shadow: 0px 3px 5px rgba(0, 0, 0, .3);
+              "
+            >
+              <i class="fa fa-lock"></i> Sign In
+            </a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>

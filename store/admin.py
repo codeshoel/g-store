@@ -28,7 +28,7 @@ class SizeAdmin(admin.ModelAdmin):
 admin.site.register(Size, SizeAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "slug", "category", "status")
+    list_display = ("id", "stock", "name", "slug", "category", "status")
 admin.site.register(Product, ProductAdmin)
 
 
@@ -42,7 +42,7 @@ class VATAdmin(admin.ModelAdmin):
 admin.site.register(VAT, VATAdmin)
 
 class AppUserAdmin(admin.ModelAdmin):
-    list_display = ("id", "email", "address", "joined",)
+    list_display = ("id", "first_name", "last_name", "email", "country", "city", "address", "joined",)
 admin.site.register(AppUser, AppUserAdmin)
 
 

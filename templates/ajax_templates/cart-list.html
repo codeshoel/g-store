@@ -2,7 +2,7 @@
 <div class="col-md-12 p-5">
     <div class="row">
         <div class="col-md-7 p-3 bg-light mb-5 shadow">
-            <h4>Your Order 
+            <h4>Your Items in the Cart 
                 <i class="fa fa-shopping-basket fa-lg"></i>
                 <small class="badge bg-danger">{{request.session.cart_data_in_session|length}}</small><br/>
             </h4>
@@ -30,7 +30,7 @@
                                     Unit Prices: <b>NGN. {{product.price}}</b>
                                 </small>
                                 <br/>
-                                <button class="btn btn-sm text-secondary 
+                                <button class="btn btn-sm btn-danger 
                                     remove 
                                     remove-item-cart-{{product.id}}" 
                                     style="font-size: 12px;"
@@ -39,7 +39,7 @@
                                     <i class="fa fa-trash"></i> Remove
                                 </button>
                                 |
-                                <button class="btn btn-sm text-secondary" style="font-size: 12px;">
+                                <button class="btn btn-sm text-light" style="font-size: 12px; background: #19EDA2;">
                                     <i class="fa fa-heart"></i> Move to wish list
                                 </button>
                             </p>
@@ -54,41 +54,11 @@
                                 id="edit-qty-input"
                                 data-id="{{product.id}}"
                                 data-color="{{product.color}}"
-                                value="{{product.qty}}" 
-                                disabled 
+                                value="{{product.qty}}"
                                 />
                             </div>
                             {% comment %} {% if user.is_authenticate %} {% endcomment %}
-                            <i 
-                                class="fa fa-edit text-primary edit-qty-btn-{{product.id}}" 
-                                data-toggle="tooltip"
-                                title="edit item quantity"
-                                id="edit-qty-btn"
-                                data-id="{{product.id}}"
-                                style="
-                                        position: absolute; 
-                                        margin-top: -20px;
-                                        margin-left: 76px; 
-                                        padding: 5px; 
-                                        cursor: pointer;
-                                        display: block;
-                                ">
-                            </i>
-                            <i 
-                                class="fa fa-check-circle text-success apply-qty-changes-{{product.id}}" 
-                                data-toggle="tooltip"
-                                title="apply change"
-                                id="apply-qty-changes"
-                                data-id="{{product.id}}"
-                                style="
-                                        position: absolute; 
-                                        margin-top: -20px;
-                                        margin-left: 76px; 
-                                        padding: 5px; 
-                                        cursor: pointer;
-                                        display: none;
-                                ">
-                            </i>
+                            
                             {% comment %} {% endif %} {% endcomment %}
                             <small class="text-secondary product-price">(<i>2 left</i>)</small><br/>
                             {% with price=product.price  %}
@@ -101,7 +71,7 @@
                     {% endfor %}
                 {% else %}
                     <h4>Your Shopping Basket is Empty</h4>
-                    <small>Navigate through the store I promise you will find something you love!</small>
+                    <small>Navigate through the store we promise you will find something you love!</small>
                 {% endif %}
                 
             </div>

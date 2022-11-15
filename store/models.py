@@ -13,6 +13,8 @@ class AppUser(AbstractBaseUser):
     last_name = models.CharField(max_length=255, null=True)
     email = models.EmailField(max_length=255, unique=True, null=True)
     mobile = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=500, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -21,11 +23,11 @@ class AppUser(AbstractBaseUser):
     objects = AppUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name", "mobile", "address"]
+    REQUIRED_FIELDS = ["first_name", "last_name", "mobile", "country", "city", "address"]
 
 
     def __str__(self) -> str:
-        return self.first_name +" "+ self.last_name
+        return self.first_name
 
     
     def get_short_name(self) -> str:
@@ -58,6 +60,7 @@ class Product(models.Model):
         verbose_name = "Product"
     
     name = models.CharField(max_length=255)
+    stock = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     desc = models.TextField()
@@ -129,6 +132,7 @@ class Cart(models.Model):
     fk = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     p_id = models.PositiveBigIntegerField(verbose_name="product id")
     name = models.CharField(max_length=150, null=True)
+    category = models.CharField(max_length=150, null=True)
     qty = models.CharField(max_length=150, null=True)
     size = models.CharField(max_length=50, null=True)
     color = models.CharField(max_length=50, null=True)

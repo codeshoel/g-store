@@ -1,7 +1,7 @@
 {% if products %}
     <div class="row">
         {% for product in products %}
-            <div class="col-md-3 my-4 bg-light">
+            <div class="col-md-3 my-4">
                 <a href="{% url 'product_detail_url' pk=product.id %}" style="text-decoration: none;" class="text-secondary">
                     <div class="card-body shadow">
                             <span class="text-secondary">
@@ -22,7 +22,15 @@
                             <button class="btn btn-sm btn-danger" data-id="{{product.id}}">
                                 <i class="fa fa-heart"></i>
                             </button>
-                            <button class="btn btn-sm btn-primary add-item-to-cart" data-id={{product.id}}>
+                            <button
+                                data-toggle="tooltips"
+                                title="Add product to cart"
+                                class="btn btn-sm text-light add-item-to-cart" 
+                                data-id={{product.id}}
+                                style="
+                                    background: #19EDA2 !important;
+                                "
+                                >
                                 <i class="fa fa-shopping-cart"></i>
                             </button>
                         </div>

@@ -1,0 +1,58 @@
+
+
+/* bootstrap style override */
+.alert{
+    font-size: 12px !important;
+}
+
+
+/* Profile page search input */
+.search-icon{
+    position: absolute;
+    z-index: 1;
+    margin-top: 12px;
+    margin-left: 5px;
+    color: rgba(153, 153, 153, 0.404);
+}
+
+#search-product-input[type="text"]{
+    padding-left: 25px;
+    color: #999;
+}
+
+#search-product-input::placeholder{
+    color: #999;
+}
+
+/* Order page styles */
+.order-page-card-header, .card-data-vitualizer-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-icons{
+    font-size: 50px;
+    color: rgba(153, 153, 153, 0.39);
+}
+
+.order-numeric{
+    font-size: 30px;
+    color: rgba(153, 153, 153, 0.39);
+}
+
+/* message slider */
+.message{
+    position: fixed;
+    z-index: 2;
+    margin-top: -46%;
+    padding: 10px;
+    display: none;
+    transition: 2s;
+    transform: translateX(5%);
+}
+
+/* navigation dropdown module */
+
+.dropdown-toggle{
+    margin-left: 60px !important;
+}
