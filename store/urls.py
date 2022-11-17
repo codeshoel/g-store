@@ -22,7 +22,6 @@ urlpatterns = [
     path('del-cart-item/', views.delete_cart_item, name="delete_cart_item_url"),
 
 
-    # path('auth-cart/', views.authenticated_cart_page, name='authenticated_cart_page_url'),
     path('charge/', views.charge_user_cart, name="charge_url"),
 
     path('404-page/', views.error_404_page, name="404_url"),

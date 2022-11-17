@@ -310,10 +310,38 @@ def login_user(request):
         if email and password is not None:
             user = authenticate(email=email, password=password)
             if user is not None:
-                login(request, user)
-                return JsonResponse({'data': 200})
+                try:
+                    session_cart_items = request.session['cart_data_in_session'].items()
+                    if len(session_cart_items) > 0:
+                        # This condition automatically save all cart items added to the user browser(session)
+                        # into the database(cart items table), i.e if they are items saved in session
+                        # they will be saved to the cart table in the database.
+                        login(request, user)
+                        for _, item in session_cart_items:
+                            add_item_to_db_cart = Cart.objects.create(
+                                fk=request.user,
+                                p_id=item['id'],
+                                name=item['name'],
+                                category=item['category'],
+                                qty=item['qty'],
+                                size=item['size'],
+                                color=item['color'],
+                                price=item['price'],
+                                image=item['image']
+                            )
+                        add_item_to_db_cart.save()
+                        request.session['cart_data_in_session'] = {}
+                        return JsonResponse({'data': 200})
+                except KeyError:
+                    pass
+                else:
+                    login(request, user)
+                    return JsonResponse({'data': 200})
+
             return JsonResponse({"data": 300})
+
         return JsonResponse({"data": 500})
+        
     return render(request, 'pages/registration/login.html', {'form':form})
 
 

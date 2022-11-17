@@ -5,9 +5,7 @@
 {% block content %}
     {% include "../incs/navbar.html" %}
     <div class="container-fluid my-5" id="CartList">
-        {% if messages %}
-            {% include './messages.html' %}
-        {% endif %}
+        {% comment %} Cart Items are displayed here {% endcomment %}
         {% include "../ajax_templates/cart-list.html" %}
     </div>
 
