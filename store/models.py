@@ -171,5 +171,19 @@ class Order(models.Model):
         return mark_safe("<img src='%s' width='50px' height='50px' />" %(self.image))
 
 
+class Carousel(models.Model):
+    class Meta:
+        verbose_name = 'Carousel'
 
+    fk = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    desc = models.CharField(max_length=355)
+    image = models.ImageField()
+    interval = models.PositiveIntegerField(blank=True, null=True)
+    is_active = models.CharField(max_length=7, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.title
 

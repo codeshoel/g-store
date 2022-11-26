@@ -2,11 +2,9 @@
 <div class="col-md-12 p-5">
     <div class="row">
         <div class="col-md-7 p-3 bg-light mb-5 shadow">
-            <h4>Your Order
+            <h4>
+                Your Order
                 <i class="fa fa-shopping-basket fa-lg"></i>
-                {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
-                    <small class="badge bg-danger">{{total_cart_item}}</small>
-                {% comment %} {% endif %} {% endcomment %}
             </h4>
             <hr/>
             <div class="row">
@@ -38,7 +36,10 @@
                                         Unit Prices: <b>NGN. {{product.price}}</b>
                                     </small>
                                     <br/>
-                                    <button class="btn btn-sm btn-danger 
+                                    <button 
+                                    class="
+                                        btn btn-sm
+                                        text-secondary 
                                         remove 
                                         remove-item-cart-{{product.id}}"
                                         data-id="{{product.p_id}}" 
@@ -46,7 +47,7 @@
                                         <i class="fa fa-trash"></i> Remove
                                     </button>
                                     |
-                                    <button class="btn btn-sm text-light" style="font-size: 12px; background: #19EDA2;">
+                                    <button class="btn btn-sm text-secondary" style="font-size: 12px;">
                                         <i class="fa fa-heart"></i> Move to wish list
                                     </button>
                                 </p>
@@ -55,7 +56,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="col-md-7">
-                                    <input 
+                                    <input
                                     type="number" 
                                     class="form-control edit-qty-input-{{product.p_id}}" 
                                     id="edit-qty-input"
@@ -64,7 +65,6 @@
                                     value="{{product.qty}}"
                                     />
                                 </div>
-                                <small class="text-secondary product-price">(<i>2 left</i>)</small><br/>
                                 {% with price=product.price  %}
                                     
                                     <h5 class="text-secondary product-price">
@@ -113,6 +113,7 @@
                     </tbody>
                 </table>
                 <hr/>
+                {% comment %} authenticated user start {% endcomment %}
                 <div class="col-md-11">
                     {% if messages %}
                         {% include './messages.html' %}
@@ -193,6 +194,7 @@
                         </div>
                     </form>
                 </div>
+                {% comment %} authenticated user end {% endcomment %}
             </div>
         </div>
     </div>

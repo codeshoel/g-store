@@ -20,12 +20,13 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <script src="https://js.stripe.com/v3/"></script>
 </head>
-<body style="background-color: #f1f1f1;">
+<body>
     {% block content %}
 
 
 
     {% endblock %}
     {% block javascript %}{% endblock %}
+    {% block footer %}{% endblock %}
 </body>
 </html>

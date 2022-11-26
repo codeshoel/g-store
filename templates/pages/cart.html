@@ -4,11 +4,10 @@
 
 {% block content %}
     {% include "../incs/navbar.html" %}
-    <div class="container-fluid my-5" id="CartList">
+    <div class="container-fluid my-5 cart-item-preloader" id="CartList">
         {% comment %} Cart Items are displayed here {% endcomment %}
-        {% include "../ajax_templates/cart-list.html" %}
     </div>
-
-
+{% endblock %}
+{% block footer %}
     {% include '../incs/footer.html' %}
-{% endblock %}    
+{% endblock %}

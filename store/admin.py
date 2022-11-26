@@ -9,10 +9,14 @@ from .models import (
     VAT, 
     AppUser,
     Cart,
-    Order
+    Order,
+    Carousel
     )
 
 
+class CarouselAdmin(admin.ModelAdmin):
+    list_display = ("id", "title", "desc", "image", "interval", "is_active", "created")
+admin.site.register(Carousel, CarouselAdmin)
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("id", "name")

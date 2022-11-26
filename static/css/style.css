@@ -1,10 +1,41 @@
+body{
+    background: #fff;
+}
 
+.navbar{
+    background: #fff !important;
+    border-bottom: 1px solid rgba(3, 5, 2, .2);
+}
 
 /* bootstrap style override */
 .alert{
     font-size: 12px !important;
 }
 
+/* carousel style */
+.carousel-caption {
+    color: #f1f1f1 !important;
+}
+
+.carousel-caption p{
+    font-size: 20px !important;
+}
+
+.carousel-caption h5{
+    font-size: 30px !important;
+}
+
+.carousel-inner{
+    border-radius: 10px; 
+    box-shadow: 1px 1px 8px 0px #333; 
+    color: #f1f1f1;
+}
+
+.carousel-caption{
+    background: #111;
+    opacity: 0.8;
+    border-radius: 5px;
+}
 
 /* Profile page search input */
 .search-icon{
@@ -56,3 +87,50 @@
 .dropdown-toggle{
     margin-left: 60px !important;
 }
+
+/* product style */
+
+.product-img:hover{
+    border-radius: 5px;
+    opacity: .8;
+    padding: 20px;
+    transition: 1s ease-in-out;
+}
+
+/* navigation logo */
+.logo-G{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    color: #19EDA2;
+    box-shadow: 2px 3px 4px 0px rgba(0, 0, 0, .3);
+    font-family: arial;
+    font-size: 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-s{
+    color: #19EDA2;
+    font-weight: 500;
+}
+
+.logo-container{
+    display: flex;
+    flex-direction: row;
+}
+
+/* badge styling */
+.badge{
+    border-radius: 100% !important;
+}
+
+.footer{
+    position: absolute;
+    margin-top: 150px;
+    display: flex;
+    margin-left: 10px;
+}
+

@@ -4,7 +4,6 @@
         <div class="col-md-7 p-3 bg-light mb-5 shadow">
             <h4>Your Items in the Cart 
                 <i class="fa fa-shopping-basket fa-lg"></i>
-                <small class="badge bg-danger">{{request.session.cart_data_in_session|length}}</small><br/>
             </h4>
             <hr/>
             <div class="row">
@@ -30,7 +29,9 @@
                                     Unit Prices: <b>NGN {{product.price}}</b>
                                 </small>
                                 <br/>
-                                <button class="btn btn-sm btn-danger 
+                                <button class="
+                                    btn btn-sm
+                                    text-secondary
                                     remove 
                                     remove-item-cart-{{product.id}}" 
                                     style="font-size: 12px;"
@@ -39,7 +40,7 @@
                                     <i class="fa fa-trash"></i> Remove
                                 </button>
                                 |
-                                <button class="btn btn-sm text-light" style="font-size: 12px; background: #19EDA2;">
+                                <button class="btn btn-sm text-secondary" style="font-size: 12px;">
                                     <i class="fa fa-heart"></i> Move to wish list
                                 </button>
                             </p>

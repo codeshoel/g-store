@@ -4,9 +4,13 @@
 
 {% block content %}
     {% include "../incs/navbar.html" %}
-
     <div class="container-fluid">
         <div class="col-md-12 p-5">
+            <div class="col-md-12 my-4 d-flex justify-content-center" id="carousel">
+                {% if carousels %}
+                {% include '../ajax_templates/carousel.html' %}
+                {% endif %}
+            </div>
             <div class="row my-5">
                 <div class="card-header">
                     <div class="col-md-12">
@@ -83,6 +87,8 @@
         </div>
     </div>
 
+{% endblock %}
+{% block footer %}
     {% include '../incs/footer.html' %}
 {% endblock %}
 

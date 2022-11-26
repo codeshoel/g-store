@@ -109,7 +109,19 @@
                                             </div>
                                         </div>
                                         <div class="col-md-10" style="display: flex; align-items: right; justify-content: right;">
-                                            <button class="btn btn-sm btn-primary save-customer-info-btn">
+                                            <button 
+                                                class="btn btn-sm btn-primary save-customer-info-btn"
+                                                style="margin-bottom: 20px;
+                                                        padding: 10px; 
+                                                        border: none;
+                                                        background-color: #19EDA2;
+                                                        color: #ffffff;
+                                                        font-weight: 500;
+                                                        float: right;
+                                                        box-shadow: 0px 3px 5px rgba(0, 0, 0, .3);
+                                                        "
+                                            >
+                                            <span class="spinner-border spinner-border-sm text-light change-profile-preloader" role="status" aria-hidden="true"></span>
                                                 <i class="fa fa-save"></i> Save Changes
                                             </button>
                                         </div>
@@ -120,26 +132,57 @@
                                     <i class="fa fa-key"></i> Security
                                 </h3>
                                 <form class="change-password-form">
-                                    <div class="row my-3">
+                                    <div id="change-password-msg"></div>
+                                    <div class="row my-4">
+                                        {% csrf_token %}
+                                        <div class="col-md-10 mb-3">
+                                            <input 
+                                            type="password" 
+                                            name="old_password"
+                                            id="old_password"
+                                            class="form-control" 
+                                            placeholder="Old Password"
+                                            required
+                                             />
+                                            <label for="country">Old Password</label>
+                                        </div>
                                         <div class="col-md-5">
                                             <input 
                                             type="password" 
-                                            name="password"
+                                            name="new_password"
+                                            id="new_password"
                                             class="form-control" 
-                                            placeholder="New Password" />
+                                            placeholder="New Password"
+                                            required
+                                             />
                                             <label for="country">New Password</label>
                                         </div>
                                         <div class="col-md-5">
                                             <input 
                                             type="password" 
-                                            name="confirm-password"
+                                            name="confirm_password"
+                                            id="confirm_password"
                                             class="form-control"
-                                            placeholder="Confirm Password" />
+                                            placeholder="Confirm Password"
+                                            required
+                                             />
                                             <label for="city">Confirm New Password</label>
                                         </div>
                                     </div>
                                     <div class="col-md-10" style="display: flex; align-items: right; justify-content: right;">
-                                        <button class="btn btn-sm btn-primary">
+                                        <button 
+                                            class="btn btn-sm btn-primary change-password-btn"
+                                            style="
+                                            margin-bottom: 20px;
+                                            padding: 10px; 
+                                            border: none;
+                                            background-color: #19EDA2;
+                                            color: #ffffff;
+                                            font-weight: 500;
+                                            float: right;
+                                            box-shadow: 0px 3px 5px rgba(0, 0, 0, .3);"
+                                        >
+                                            <span class="spinner-border spinner-border-sm text-light change-password-preloader" role="status" aria-hidden="true"></span>
                                             <i class="fa fa-key"></i> Save New Password
                                         </button>
                                     </div>

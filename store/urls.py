@@ -1,3 +1,4 @@
+from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views
 
@@ -16,8 +17,9 @@ urlpatterns = [
     path('product-detail/<int:pk>', views.product_details, name="product_detail_url"),
     path('product-detail-filter/', views.product_detail_filter, name="product_detail_url"),
 
-    path('add-items-session-cart', views.add_items_to_session_cart, name="addtosession_url"),
+    path('add-items-cart', views.add_items_to_cart, name="addtosession_url"),
     path('cart-list/', views.cart_list, name='cart_list_url'),
+    path('cart-item-count/', views.total_cart_item, name='cart_item_count_url'),
     path('update-cart-item/', views.update_cart_item, name='edit_cart_item_url'),
     path('del-cart-item/', views.delete_cart_item, name="delete_cart_item_url"),
 
@@ -28,12 +30,15 @@ urlpatterns = [
 
     path('user-registration/', views.user_registration, name="user_registration_url"),
     path('login-user/', views.login_user, name="login_url"),
+    path('logout/', views.log_out_user, name="logout_url"),
+
     path('account/', views.logged_in_user, name="store_url"),
     path('orders/', views.user_order, name="order_url"),
     path('delete-order/', views.delete_order, name="order_url"),
     path('user-profile/', views.user_profile, name="user_profile_url"),
     path('update-info/', views.update_user_info, name="update_user_info_url"),
-    path('logout/', views.log_out_user, name="logout_url"),
+
+    path('change-password/', views.change_password, name="password_reset"),
 
 
 

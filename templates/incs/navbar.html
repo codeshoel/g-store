@@ -1,6 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home_url' %}">G-store</a>
+      <a class="navbar-brand" href="{% url 'home_url' %}">
+        <div class="logo-container">
+          <div class="logo-G">G</div><span class="logo-s">-store</span>
+        </div>
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -9,16 +13,20 @@
           <li class="nav-item">
             {% if user.is_authenticated %}
               <a class="nav-link" href="{% url 'cart_list_url' %}">
-                Cart <span class="badge bg-danger">
+                <i class="fa fa-shopping-basket"></i>Shopping Cart 
+                <span class="badge bg-danger" id="authenticated-user-total-cart-item">
                   {% comment %} display logged in user total cart item {% endcomment %}
-                <i class="fa fa-shopping-basket" id="auth-total-cart-item"> {{total_cart_item}}</i>
+                  0
                 </span>
               </a>
             {% else %}
               <a class="nav-link" href="{% url 'cart_list_url' %}">
-                Cart <span class="badge bg-danger">
-                <i class="fa fa-shopping-basket" id="total-cart-item"> {{request.session.cart_data_in_session|length}}</i>
-                </span>
+                  <i class="fa fa-shopping-basket">
+                  </i>Shopping Cart 
+                  <span class="badge bg-danger badge-sm" id="un-authenticated-user-total-cart-item">
+                    {% comment %} display un-authenticated user total cart item {% endcomment %}
+                    0
+                  </span>
               </a>
             {% endif %}
           </li>

@@ -1,23 +1,25 @@
+import json
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+from django.utils.html import strip_tags
 
-from .models import AppUser, Product, ProductAttribute, Cart, Order, Category
+from .models import AppUser, Product, ProductAttribute, Cart, Order, Category, Carousel
 from .forms import AppUserRegistrationForm, AppUserLoginForm
 
 import stripe
 
 
-
-
-
 def home(request):
-    return render(request, "pages/index.html", {})
+    carousels = Carousel.objects.all().order_by("-id")
+ 
+    return render(request, "pages/index.html", {"carousels": carousels})
 
 
 def product_list(request):
@@ -103,8 +105,8 @@ def filter_product_by_search(request):
     return render(request, "pages/index.html", {})
 
 
-def add_items_to_session_cart(request):
-    cart_items = {}
+def add_items_to_cart(request):
+    cart_items = {} # session initialization
     if request.method == "GET" and request.GET.get('from-product-detail-page'):
         id = request.GET['id']
         name = request.GET['product_name']
@@ -115,6 +117,7 @@ def add_items_to_session_cart(request):
         qty = request.GET['product_qty']
         price = int(request.GET['product_total_price'])
 
+        # add item to cart table in the database
         if request.user.is_authenticated:
             try:
                 cart = Cart.objects.get(p_id=id)
@@ -216,6 +219,7 @@ def update_cart_item(request):
         total_amt = 0
         priceList = []
 
+        # The if control flow updates cart items for authenticated user or customer.
         if request.user.is_authenticated:
             cart_data_ = Cart.objects.get(fk=request.user, p_id=int(product_id))
             new_qty = int(qty)
@@ -236,6 +240,7 @@ def update_cart_item(request):
             t = render_to_string('ajax_templates/auth-cart.html', context)
             return JsonResponse({'data': t})    
         else:
+            # This update cart items for unauthenticated user or customer.
             if 'cart_data_in_session' in request.session:
                 if product_id in request.session['cart_data_in_session']:
                     cart_data = request.session['cart_data_in_session']
@@ -274,6 +279,7 @@ def cart_list(request):
     total_amt = 0
     cart_items = {}
     priceList = []
+
     if request.method == "GET" and request.GET.get("getCartItemList"):
         if request.user.is_authenticated:
             # fetching and displaying cart items for authenticated user from the database
@@ -282,6 +288,7 @@ def cart_list(request):
                 sub_total = int(item.qty) * item.price
                 priceList.append(sub_total)
             total_amt = sum(priceList)
+
             context = {
                 'cart_data': cart_data, 
                 'total_amt': total_amt,
@@ -302,6 +309,16 @@ def cart_list(request):
     return render(request, "pages/cart.html", context={})
 
 
+def total_cart_item(request):
+    if request.method == "GET" and request.GET.get("is_authenticated"):
+        total_cart_item = Cart.objects.filter(fk=request.user.id).count()
+        return JsonResponse({"data": total_cart_item})
+
+    if request.method == "GET" and request.GET.get("un_authenticated"):
+        return JsonResponse({"data": len(request.session['cart_data_in_session'])})
+    
+
+
 def login_user(request):
     form = AppUserLoginForm()
     if request.method == "POST":
@@ -318,25 +335,33 @@ def login_user(request):
                         # they will be saved to the cart table in the database.
                         login(request, user)
                         for _, item in session_cart_items:
-                            add_item_to_db_cart = Cart.objects.create(
-                                fk=request.user,
-                                p_id=item['id'],
-                                name=item['name'],
-                                category=item['category'],
-                                qty=item['qty'],
-                                size=item['size'],
-                                color=item['color'],
-                                price=item['price'],
-                                image=item['image']
-                            )
-                        add_item_to_db_cart.save()
+                            try:
+                                product = Cart.objects.get(p_id=int(item['id']), fk=request.user)
+                                if product:
+                                    product.qty = int(product.qty) + int(item['qty'])
+                                    product.save()
+                            except Exception as e:
+                                print(e)
+                                add_item_to_db_cart = Cart.objects.create(
+                                    fk=request.user,
+                                    p_id=item['id'],
+                                    name=item['name'],
+                                    category=item['category'],
+                                    qty=item['qty'],
+                                    size=item['size'],
+                                    color=item['color'],
+                                    price=item['price'],
+                                    image=item['image']
+                                )
+                                add_item_to_db_cart.save()
+                           
                         request.session['cart_data_in_session'] = {}
                         return JsonResponse({'data': 200})
-                except KeyError:
-                    pass
-                else:
                     login(request, user)
                     return JsonResponse({'data': 200})
+
+                except Exception as e:
+                    print(e)
 
             return JsonResponse({"data": 300})
 
@@ -345,16 +370,28 @@ def login_user(request):
     return render(request, 'pages/registration/login.html', {'form':form})
 
 
+# Send email to new registered user
+def mail_new_user(recepient_email, recepient_name, register_user):
+    context = {
+        'recepient_name': recepient_name,
+    }
+    html_content = render_to_string("email_templates/registrationEmail.html", context)
+    text_content = strip_tags(html_content)
+    email = EmailMultiAlternatives(
+            "Appreciation for project review",
+            text_content,
+            settings.EMAIL_HOST_USER, 
+            [recepient_email],
+            )
+    print("processing..")
+    email.attach_alternative(html_content, 'text/html')
+    try:
+        email.send()
+        return True
+    except Exception as e:
+        print("Network error", e)
+        return False
 
-def welcome_mail(recepient_email): 
-    send_mail(
-        "Subject here", 
-        "Hi, Thanks for signup with g-store the best online e-commerce platform.", 
-        settings.EMAIL_HOST_USER, 
-        [recepient_email], 
-        fail_silently=True
-        )
-    print("sent..!")
 
 def user_registration(request):
     form = AppUserRegistrationForm()
@@ -371,7 +408,6 @@ def user_registration(request):
         if fname and lname and email and mobile and country and city and address and password is not None:
             try:
                 AppUser.objects.get(email=email)
-
                 # This return a Json response to the ajax api that email is already in use.
                 return JsonResponse({"data": 300})
             except AppUser.DoesNotExist:
@@ -388,39 +424,47 @@ def user_registration(request):
                         password=password
                         )
                     try:
-                        welcome_mail(recepient_email=email)
+                        mail_sent = mail_new_user(recepient_email=email, recepient_name=fname, register_user=register_user)
+                        if mail_sent == True:
+                            register_user.save()
+                            if register_user is not None:
+                                user = authenticate(request, email=email, password=password)
+                                if user.is_active:
+                                    if len(session_cart_items) > 0:
+                                        # This condition automatically save all cart items added to the user browser(session)
+                                        # into the database(cart items table), i.e if they are items saved in session
+                                        # they will be saved to the cart table in the database.
+                                        login(request, user)
+                                        for _, item in session_cart_items:
+                                            try:
+                                                product = Cart.objects.get(p_id=int(item['id']), fk=request.user)
+                                                if product:
+                                                    product.qty = int(product.qty) + int(item['qty'])
+                                                    product.save()
+                                            except Exception as e:
+                                                print(e)
+                                                add_item_to_db_cart = Cart.objects.create(
+                                                    fk=request.user,
+                                                    p_id=item['id'],
+                                                    name=item['name'],
+                                                    category=item['category'],
+                                                    qty=item['qty'],
+                                                    size=item['size'],
+                                                    color=item['color'],
+                                                    price=item['price'],
+                                                    image=item['image']
+                                                )
+                                                add_item_to_db_cart.save()
+                                        request.session['cart_data_in_session'] = {}
+                                        return JsonResponse({"data": 200})
+                                    else:
+                                        login(request, user)
+                                        return JsonResponse({"data": 200})
+                        return JsonResponse({"data": 503})
                     except Exception:
                         return JsonResponse({"data": 503}) #Service unavailable(Computer may not be connected to the internet).
-                    else:
-                        register_user.save()
-                        if register_user is not None:
-                            user = authenticate(request, email=email, password=password)
-                            if user.is_active:
-                                if len(session_cart_items) > 0:
-                                    # This condition automatically save all cart items added to the user browser(session)
-                                    # into the database(cart items table), i.e if they are items saved in session
-                                    # they will be saved to the cart table in the database.
-                                    login(request, user)
-                                    for _, item in session_cart_items:
-                                        add_item_to_db_cart = Cart.objects.create(
-                                            fk=request.user,
-                                            p_id=item['id'],
-                                            name=item['name'],
-                                            category=item['category'],
-                                            qty=item['qty'],
-                                            size=item['size'],
-                                            color=item['color'],
-                                            price=item['price'],
-                                            image=item['image']
-                                        )
-                                    add_item_to_db_cart.save()
-                                    request.session['cart_data_in_session'] = {}
-                                    return JsonResponse({"data": 200})
-                                else:
-                                    login(request, user)
-                                    return JsonResponse({"data": 200})
-                except KeyError:
-                    pass
+                except Exception as e:
+                    print("System failed sending email", e)
     return render(request, 'pages/registration/signup.html', {"form":form})
 
 
@@ -514,6 +558,7 @@ def charge_user_cart(request):
 def logged_in_user(request):
     return render(request, 'pages/registration/store.html', {})
 
+
 @login_required(login_url="login_url")
 def user_order(request):
     if request.method == "GET" and request.GET.get("customerOrder"):
@@ -533,6 +578,7 @@ def user_order(request):
         return JsonResponse(context)
     return render(request, "pages/registration/order.html", {})
 
+
 @login_required(login_url="login_url")
 def delete_order(request):
     if request.method == "GET" and request.GET.get("product_id"):
@@ -546,15 +592,18 @@ def delete_order(request):
             return JsonResponse({"data": 200})
     return render(request, "pages/registration/order.html", {})
 
+
 @login_required(login_url="login_url")
 def log_out_user(request):
     logout(request)
     return redirect('home_url')
 
+
 @login_required(login_url="login_url")
 def user_profile(request):
     user = AppUser.objects.get(id=request.user.id)
     return render(request, "pages/registration/profile.html", {"user": user})
+
 
 @login_required(login_url="login_url")
 def update_user_info(request):
@@ -594,6 +643,25 @@ def update_user_info(request):
                     return JsonResponse({"data": 200})
     return render(request, "pages/registration/profile.html", {})
 
+
+@login_required(login_url="login_url")
+def change_password(request):
+    if request.method == "POST":
+        new_password = request.POST.get('new_password')
+        old_password = request.POST.get('old_password')
+
+        user = AppUser.objects.get(id=request.user.id)
+
+        if user.check_password(old_password) == True:
+            if user.check_password(new_password) == False:
+                # change user password if new password is not the same as existing password.
+                user.set_password(new_password)
+                user.save()
+                return JsonResponse({"data": 200})
+            else:
+                return JsonResponse({"data": 301}) # return True if new password is same as old password. 
+        return JsonResponse({"data": 401})
+    return render(request, "pages/registration/profile.html", {})
 
 def error_404_page(request):
     return render(request, "pages/404.html", {})
