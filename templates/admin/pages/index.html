@@ -1,0 +1,178 @@
+{% extends '../incs/base.html' %}
+{% load static %}
+
+{% block title %} Admin {% endblock title %}
+
+
+{% block content %}
+    {% include '../incs/navbar.html' %}
+    <div class="container-fluid admin-container my-5">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2">
+                    {% comment %} side navigation bar {% endcomment %}
+                    {% include '../incs/sidenav.html' %}
+                </div>
+                <div class="col-md-10">
+                    <div class="col-md-12 my-5">
+                        <h3>
+                            Store Overview<hr/>
+                        </h3>
+                        
+                        <div class="card-body">
+                            <div class="row">
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-primary text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Customers</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-users" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>150 <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-secondary text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Products</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-building" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>1K <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-light text-dark">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Categories</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-tasks" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>30 <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-warning text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Orders</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-shopping-cart" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>150 <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-danger text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Returns</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-arrow-left" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>150 <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-success text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Delivered</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-truck" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>10K <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-dark text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Sales</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-bank" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>1.2M <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 p-2">
+                            <h4 class="my-5"> <i class="fa fa-shopping-cart"></i> Recent Orders</h4>
+                            <table class="table table-responsive">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Photo</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Unit cost</th>
+                                    <th>Total cost</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="p.jpg" /></td>
+                                    <td>Product 1</td>
+                                    <td>category name</td>
+                                    <td>3</td>
+                                    <td>NGN1000.00</td>
+                                    <td>NGN3000.00</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../incs/scripts.html' %}
+{% endblock content %}
+    

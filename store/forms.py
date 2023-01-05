@@ -61,6 +61,32 @@ class AppUserRegistrationForm(forms.Form):
                 )
         )
 
+    country = forms.CharField( 
+        max_length=150, 
+        required=True,
+        widget=
+            forms.TextInput(
+                attrs={
+                        'class': 'form-control',
+                        'placeholder': 'Enter resident counrty',
+                        'id':'country',
+                    }
+                )
+        )
+
+    city = forms.CharField( 
+        max_length=150, 
+        required=True,
+        widget=
+            forms.TextInput(
+                attrs={
+                        'class': 'form-control',
+                        'placeholder': 'Enter resident city',
+                        'id':'city',
+                    }
+                )
+        )
+
 
     address = forms.CharField(
         max_length=150, 

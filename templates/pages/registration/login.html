@@ -9,9 +9,28 @@
         <div class="col-md-3" style="margin-top: 8%;">
             <div class="card">
                 <div class="card-body">
-                    <h3>G-store</h3>
+                    <div class="col-md-12" style="justify-content: center; display: flex; align-items: center;">
+                        <div class="logo" 
+                            style="
+                                width: 60px; 
+                                height: 60px; 
+                                box-shadow: 2px 3px 4px 0px rgba(0, 0, 0, .3);
+                                border-radius: 200px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                flex-direction: column;
+                                font-size: 40px;
+                                font-weight: 900;
+                                font-family: arial;
+                                color: #19EDA2;
+                                ">
+                            G
+                        </div> 
+                        <span style="font-size: 20px; font-weight: 600; margin-left: 2px; color: #19EDA2;">-Store</span>
+                    </div>
                     <form id="loginForm">
-                        <div class="msg col"></div>
+                        <div class="msg col my-3"></div>
                         {% csrf_token %}
                         <div class="form-group">
                             {{form.as_p}}
@@ -28,10 +47,11 @@
                             color: #ffffff;
                             font-weight: 500"
                             >
-                            <i class="fa fa-lock"></i> LogIn
+                            <span class="spinner-border spinner-border-sm text-light login-preloader" role="status" aria-hidden="true"></span>
+                             <i class="fa fa-lock"></i> LogIn
                         </button>
                     </form>
-                    <small class="text-secondary">g-store &copy; 2022</small>
+                    <small class="text-secondary">G-store &copy; 2022</small>
                 </div>
             </div>
         </div>

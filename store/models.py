@@ -13,6 +13,8 @@ class AppUser(AbstractBaseUser):
     last_name = models.CharField(max_length=255, null=True)
     email = models.EmailField(max_length=255, unique=True, null=True)
     mobile = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=500, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -21,11 +23,11 @@ class AppUser(AbstractBaseUser):
     objects = AppUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name", "mobile", "address"]
+    REQUIRED_FIELDS = ["first_name", "last_name", "mobile", "country", "city", "address"]
 
 
     def __str__(self) -> str:
-        return self.first_name +" "+ self.last_name
+        return self.first_name
 
     
     def get_short_name(self) -> str:
@@ -58,6 +60,7 @@ class Product(models.Model):
         verbose_name = "Product"
     
     name = models.CharField(max_length=255)
+    stock = models.IntegerField(default=0)
     slug = models.SlugField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     desc = models.TextField()
@@ -129,6 +132,7 @@ class Cart(models.Model):
     fk = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     p_id = models.PositiveBigIntegerField(verbose_name="product id")
     name = models.CharField(max_length=150, null=True)
+    category = models.CharField(max_length=150, null=True)
     qty = models.CharField(max_length=150, null=True)
     size = models.CharField(max_length=50, null=True)
     color = models.CharField(max_length=50, null=True)
@@ -143,6 +147,43 @@ class Cart(models.Model):
 
 
 
+class Order(models.Model):
+    class Meta:
+        verbose_name = "Oder"
+
+    fk = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    p_id = models.PositiveBigIntegerField(verbose_name="product id")
+    name = models.CharField(max_length=150, null=True)
+    qty = models.CharField(max_length=150, null=True)
+    size = models.CharField(max_length=50, null=True)
+    color = models.CharField(max_length=50, null=True)
+    price = models.PositiveIntegerField(null=True)
+    image = models.ImageField(null=True)
+    status = models.PositiveIntegerField(null=True, default=0)
+    date = models.DateField(auto_now_add=True, null=True)
 
 
+    def __str__(self):
+        return self.name
+
+
+    def image_tag(self):
+        return mark_safe("<img src='%s' width='50px' height='50px' />" %(self.image))
+
+
+class Carousel(models.Model):
+    class Meta:
+        verbose_name = 'Carousel'
+
+    fk = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    desc = models.CharField(max_length=355)
+    image = models.ImageField()
+    interval = models.PositiveIntegerField(blank=True, null=True)
+    is_active = models.CharField(max_length=7, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.title
 

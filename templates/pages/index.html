@@ -4,23 +4,82 @@
 
 {% block content %}
     {% include "../incs/navbar.html" %}
-
     <div class="container-fluid">
         <div class="col-md-12 p-5">
+            <div class="col-md-12 my-4 d-flex justify-content-center" id="carousel">
+                {% if carousels %}
+                {% include '../ajax_templates/carousel.html' %}
+                {% endif %}
+            </div>
             <div class="row my-5">
+                <div class="card-header">
+                    <div class="col-md-12">
+                        <div class="row">
+                            
+                            <div class="col-md-3">
+                                <from class="search-input">
+                                    {% csrf_token %}
+                                    <i class="fa fa-search search-icon"></i>
+                                    <input 
+                                    type="text" 
+                                    name="search-product"
+                                    id="search-product-input"
+                                    class="form-control"
+                                    placeholder="Search..."
+                                     />
+                                </form>
+                            </div>
+                            <div class="col-md-9"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-8" id="product_loader">
                     {% comment %} products are loadered here using ajax {% endcomment %}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 my-4">
                     <div class="card">
                         <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            
+                        <div class="card-body categories">
+                            {% comment %} categories are displayed here using ajax {% endcomment %}
                         </div>
                         <p></p>
-                        <div class="card-header">Shopping filter</div>
+                        <div class="card-header">
+                            <h6>Our Price Range from:</h6>
+                        </div>
                             <div class="card-body">
-                                
+                                <p><b>Min {{priceRange.price__min}} - Max {{priceRange.price__max}}</b></p>
+                                <div class="price-range-slider-container">
+                                    <input 
+                                        type="range" 
+                                        min="{{priceRange.price__min}}" 
+                                        max="{{priceRange.price__max}}" 
+                                        value="{{priceRange.price__min}}" 
+                                        class="price-range"
+                                        id="rangeInput"
+                                        name="rangeInput"
+                                        oninput="maxPrice.value=this.value"
+                                    />
+                                    <p>
+                                        Max: <input 
+                                        type="number"
+                                        min="{{priceRange.price__min}}"
+                                        max="{{priceRange.price__max}}"
+                                        value="{{priceRange.price__min}}"
+                                        name="maxPrice"
+                                        id="maxPrice"
+                                        onkeyup="rangeInput.value=this.value" />
+                                        <button 
+                                            class="btn btn-sm text-light" 
+                                            id="PriceFilterBtn" 
+                                            style="
+                                                background: #19EDA2 !important;
+                                                box-shadow: 2px 3px 4px 0px rgba(0, 0, 0, .3);
+                                                "
+                                            >
+                                            <i class="fa fa-filter"></i> filter
+                                        </button>
+                                    </p>
+                                </div>
                             </div>
                     </div>
                 </div>
@@ -28,6 +87,8 @@
         </div>
     </div>
 
+{% endblock %}
+{% block footer %}
     {% include '../incs/footer.html' %}
 {% endblock %}
 

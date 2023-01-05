@@ -1,0 +1,45 @@
+
+<div class="sidebar">
+    <div class="logo-container my-4" style="display: flex; align-items: center; justify-content: center;">
+        <div class="logo-G">G</div><span class="logo-s">-store</span>
+    </div>
+    <div class="menu">
+        <ul>
+            <li>
+                <a href="{% url 'store_admin:dashboard' %}"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li class="parent-show-child menu-dropdown" data-number="1">
+                <a href="#">
+                    <i class="fa fa-building"></i> 
+                    My store <i class="fa fa-angle-right menu-icon menu-icon-1"></i>
+                </a>
+                <ul class="child child-1">
+                    <li><a href="{% url 'store_admin:store' %}"><i class="fa fa-table"></i> Products</a></li>
+                    <li><a href="#"><i class="fa fa-tasks"></i> Categories</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-gift"></i> Orders</a>
+            </li>
+            <li class="parent-show-child menu-dropdown" data-number="2">
+                <a href="#">
+                    <i class="fa fa-users"></i> 
+                    Customers <i class="fa fa-angle-right menu-icon menu-icon-2"></i>
+                </a>
+                <ul class="child child-2">
+                    <li><a href="{% url 'store_admin:customers' %}"><i class="fa fa-user"></i> Store users</a></li>
+                </ul>
+            </li>
+            <li class="parent-show-child menu-dropdown" data-number="3">
+                <a href="#">
+                    <i class="fa fa-cog"></i> 
+                    System settings <i class="fa fa-angle-right menu-icon menu-icon-3"></i>
+                </a>
+                <ul class="child child-3">
+                    <li><a href="#"><i class="fa fa-user-circle"></i> Users</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+

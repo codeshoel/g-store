@@ -2,9 +2,8 @@
 <div class="col-md-12 p-5">
     <div class="row">
         <div class="col-md-7 p-3 bg-light mb-5 shadow">
-            <h4>Your Order 
+            <h4>Your Items in the Cart 
                 <i class="fa fa-shopping-basket fa-lg"></i>
-                <small class="badge bg-danger">{{request.session.cart_data_in_session|length}}</small><br/>
             </h4>
             <hr/>
             <div class="row">
@@ -27,10 +26,12 @@
                                     
                                 </small><br/>
                                 <small>
-                                    Unit Prices: <b>NGN. {{product.price}}</b>
+                                    Unit Prices: <b>NGN {{product.price}}</b>
                                 </small>
                                 <br/>
-                                <button class="btn btn-sm text-secondary 
+                                <button class="
+                                    btn btn-sm
+                                    text-secondary
                                     remove 
                                     remove-item-cart-{{product.id}}" 
                                     style="font-size: 12px;"
@@ -54,54 +55,24 @@
                                 id="edit-qty-input"
                                 data-id="{{product.id}}"
                                 data-color="{{product.color}}"
-                                value="{{product.qty}}" 
-                                disabled 
+                                value="{{product.qty}}"
                                 />
                             </div>
                             {% comment %} {% if user.is_authenticate %} {% endcomment %}
-                            <i 
-                                class="fa fa-edit text-primary edit-qty-btn-{{product.id}}" 
-                                data-toggle="tooltip"
-                                title="edit item quantity"
-                                id="edit-qty-btn"
-                                data-id="{{product.id}}"
-                                style="
-                                        position: absolute; 
-                                        margin-top: -20px;
-                                        margin-left: 76px; 
-                                        padding: 5px; 
-                                        cursor: pointer;
-                                        display: block;
-                                ">
-                            </i>
-                            <i 
-                                class="fa fa-check-circle text-success apply-qty-changes-{{product.id}}" 
-                                data-toggle="tooltip"
-                                title="apply change"
-                                id="apply-qty-changes"
-                                data-id="{{product.id}}"
-                                style="
-                                        position: absolute; 
-                                        margin-top: -20px;
-                                        margin-left: 76px; 
-                                        padding: 5px; 
-                                        cursor: pointer;
-                                        display: none;
-                                ">
-                            </i>
+                            
                             {% comment %} {% endif %} {% endcomment %}
-                            <small class="text-secondary product-price">(<i>2 left</i>)</small><br/>
+                            <small class="text-secondary product-price">(<i>{{product.stock}} left</i>)</small><br/>
                             {% with price=product.price  %}
                                 
                                 <h5 class="text-secondary product-price">
-                                    NGN. {{ price|mul:product.qty }}
+                                    NGN {{ price|mul:product.qty }}
                                 </h5>
                             {% endwith %}
                         </div>
                     {% endfor %}
                 {% else %}
                     <h4>Your Shopping Basket is Empty</h4>
-                    <small>Navigate through the store I promise you will find something you love!</small>
+                    <small>Navigate through the store we promise you will find something you love!</small>
                 {% endif %}
                 
             </div>
@@ -109,7 +80,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-4">
             <div class="row bg-light p-3 shadow">
-                <h4>Total</h4>
+                <h4>Order Summary</h4>
                 <hr/>
                 <table class="table text-secondary" style="border: none !important; border-bottom: 2px solid #fff !important;">
                     <tbody>
@@ -118,10 +89,10 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><span>NGN. {{total_amt}}</span></td>
+                            <td><span>NGN {{total_amt}}</span></td>
                         </tr>
                         <tr>
-                            <td>Delivery</td> 
+                            <td>Delivery fee</td> 
                             <td></td>
                             <td></td>
                             <td></td>
@@ -132,11 +103,55 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><b>NGN. {{total_amt}}</b></td>
+                            <td><b>NGN {{total_amt}}</b></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="col-md-11">
+                    <hr/>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <div class="row">
+                            <div class="col-md-5" 
+                            style="
+                                height: 50px; 
+                                box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
+                                border-radius: 4px;
+                                display: flex;
+                                justify-content: left;
+                                align-items: center;
+                                "
+                            >
+                                <i class="fa fa-credit-card text-primary" style="font-size: 20px;"></i> 
+                                <small 
+                                    class="text-secondary" 
+                                    style="font-size: 11px; 
+                                            margin-left: 2px;"
+                                    >
+                                    Credit Card
+                                </small>
+                            </div>
+                            <div class="col-md-2">OR</div>
+                            <div class="col-md-5" 
+                            style="
+                                height: 50px; 
+                                box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, .2);
+                                border-radius: 4px;
+                                display: flex;
+                                justify-content: left;
+                                align-items: center;
+                                "
+                            >
+                                <i class="fa fa-credit-card text-danger" style="font-size: 20px;"></i> 
+                                <small 
+                                    class="text-secondary" 
+                                    style="font-size: 11px; 
+                                            margin-left: 2px;"
+                                    >
+                                    Debit Card
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                     <a 
                         href="{% url 'login_url' %}"
                         class="btn shadow"

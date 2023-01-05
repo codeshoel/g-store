@@ -2,7 +2,7 @@ from django.contrib.auth.models import BaseUserManager
 
 
 class AppUserManager(BaseUserManager):
-    def create_user(self, first_name, last_name, email, mobile, address, password, *args, **kwargs):
+    def create_user(self, first_name, last_name, email, mobile, country, city, address, password, *args, **kwargs):
         """
             Creates and saves a User with provided email and password
         """
@@ -14,6 +14,8 @@ class AppUserManager(BaseUserManager):
             last_name=last_name,
             email=self.normalize_email(email),
             mobile=mobile,
+            country=country,
+            city=city,
             address=address,
             )
         user.set_password(password)
@@ -21,7 +23,7 @@ class AppUserManager(BaseUserManager):
         return user
 
     
-    def create_superuser(self, first_name, last_name, email, mobile, address, password, *args, **kwargs):
+    def create_superuser(self, first_name, last_name, email, mobile, country, city, address, password, *args, **kwargs):
         """
             Creates and save superuser with provided email and password
         """
@@ -30,6 +32,8 @@ class AppUserManager(BaseUserManager):
             last_name=last_name,
             email=email, 
             mobile=mobile,
+            country=country,
+            city=city,
             address=address,
             password=password,
             )

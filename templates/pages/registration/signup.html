@@ -1,87 +1,138 @@
 {% extends '../../incs/base.html' %}
 {% load static %}
-{% block title %}Home{% endblock %}
+{% block title %} Register{% endblock %}
 
 {% block content %}
 {% include './auth-navbar.html' %}
 
     <div class="container-fluid d-flex justify-content-center">
-        <div class="col-md-6 my-5">
+        <div class="col-md-6" style="margin-top: 8%;">
             <div class="card my-5">
                 <div class="card-body">
-                    <div class="msg"></div>
-                    <form class="registration">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{ form.first_name.label }}
-                                    {{ form.first_name }}
-                                </div>
-                                <div class="col-md-6">
-                                    {{ form.last_name.label }}
-                                    {{ form.last_name }}
-                                </div>
-                            </div>
-                        </div>
-                        <p></p>
-                        <br/>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{ form.email.label }}
-                                    {{ form.email }}
-                                </div>
-                                <div class="col-md-6">
-                                    {{ form.mobile.label }}
-                                    {{ form.mobile }}
-                                </div>
-                            </div>
-                        </div>
-                        <p></p>
-                        <br/>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{ form.address.label }}
-                                    {{ form.address }}
-                                </div>
-                            </div>
-                        </div>
-                        <p></p>
-                        <br/>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{ form.password1.label }}
-                                    {{ form.password1 }}
-                                </div>
-                                <div class="col-md-6">
-                                    {{ form.password2.label }}
-                                    {{ form.password2 }}
-                                </div>
-                            </div>
-                        </div>
-                        <p></p>
-                        <br/>
-                        <button 
-                            class="btn registration-btn"
+                    {% comment %} logo start {% endcomment %}
+                    <div class="col-md-12" style="justify-content: center; display: flex; align-items: center; margin-top: 5%;">
+                        <div class="logo" 
                             style="
-                            width: 100%; 
-                            margin-bottom: 20px;
-                            padding: 10px; 
-                            border: none;
-                            background-color: #19EDA2;
-                            color: #ffffff;
-                            font-weight: 500"
-                            >
-                            <i class="fa fa-user btn-icon"></i> Register
-                        </button>
-                    </form>
+                                width: 60px; 
+                                height: 60px; 
+                                box-shadow: 2px 3px 4px 0px rgba(0, 0, 0, .3);
+                                border-radius: 200px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                flex-direction: column;
+                                font-size: 40px;
+                                font-weight: 900;
+                                font-family: arial;
+                                color: #19EDA2;
+                                ">
+                            G
+                        </div> 
+                        <span style="font-size: 20px; font-weight: 600; margin-left: 2px; color: #19EDA2;">-Store</span>
+                    </div>
+                    {% comment %} logo end {% endcomment %}
+                    <hr/>
+                    <div class="col-md-11">
+                        <form class="registration my-5">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.first_name.label }}
+                                        {{ form.first_name }}
+                                        <span class="fname-error"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.last_name.label }}
+                                        {{ form.last_name }}
+                                        <span class="lname-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <br/>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.email.label }}
+                                        {{ form.email }}
+                                        <span class="email-error"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.mobile.label }}
+                                        {{ form.mobile }}
+                                        <span class="mobile-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <br/>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.country.label }}
+                                        {{ form.country }}
+                                        <span class="country-error"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.city.label }}
+                                        {{ form.city }}
+                                        <span class="city-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <br/>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ form.address.label }}
+                                        {{ form.address }}
+                                        <span class="address-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <br/>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {{ form.password1.label }}
+                                        {{ form.password1 }}
+                                        <span class="passsword-error"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form.password2.label }}
+                                        {{ form.password2 }}
+                                        <span class="cpassword-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <br/>
+                            <div id="msg"></div>
+                            <button 
+                                class="btn registration-btn"
+                                style="
+                                margin-bottom: 20px;
+                                padding: 10px; 
+                                border: none;
+                                background-color: #19EDA2;
+                                color: #ffffff;
+                                font-weight: 500;
+                                float: right;
+                                box-shadow: 0px 3px 5px rgba(0, 0, 0, .3);
+                                "
+                                >
+                                <span class="spinner-border spinner-border-sm text-light registration-preloader" role="status" aria-hidden="true"></span>
+                                <i class="fa fa-user"></i> Register
+                            </button>
+                            <small class="text-secondary">G-store &copy; 2022</small>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 {% include '../../incs/scripts.html' %}
 {% endblock %}

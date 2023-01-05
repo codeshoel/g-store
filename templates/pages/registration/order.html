@@ -1,0 +1,86 @@
+{% extends '../../incs/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% include "../../incs/navbar.html" %}
+
+    <div class="container-fluid">
+        <div class="col-md-12 p-5">
+            <div class="row my-5">
+                <div class="col-md-12">
+                    <div class="row mb-2">
+
+                        <div class="col-md-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-warning text-light order-page-card-header">
+                                    <h6>Total Order</h6>
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                                <div class="col-md-12 p-3 card-data-vitualizer-container">
+                                    <i class="fa fa-tags order-icons"></i>
+                                    <span class="order-numeric" id="total_order"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-danger text-light order-page-card-header">
+                                    <h6>Cart Item(s)</h6>
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                                <div class="col-md-12 p-3 card-data-vitualizer-container">
+                                    <i class="fa fa-shopping-cart order-icons"></i>
+                                    <span class="order-numeric" id="total_item_in_cart"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info text-light order-page-card-header">
+                                    <h6>Panding Order</h6>
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                                <div class="col-md-12 p-3 card-data-vitualizer-container">
+                                    <i class="fa fa-gift order-icons"></i>
+                                    <span class="order-numeric" id="total_pending"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-success text-light order-page-card-header">
+                                    <h6>Total Delivery</h6>
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                                <div class="col-md-12 p-3 card-data-vitualizer-container">
+                                    <i class="fa fa-truck order-icons"></i>
+                                    <span class="order-numeric" id="total_delivered"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                    </div>
+                    <div class="card my-5">
+                        <div class="card-body">
+                            <div class="table-responsive" id="ordered_product_loader">
+                                {% comment %} oder loaded here tabler {% endcomment %}
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="message"></div>
+    {% include '../../incs/footer.html' %}
+{% endblock %}
+
+
+
+

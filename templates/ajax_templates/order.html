@@ -1,0 +1,48 @@
+{% if orders %}
+<table class="table table-hover">
+    <tr class="bg-secondary text-light">
+        <th>s/n</th>
+        <th>Action</th>
+        <th>Photo</th>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Order Date</th>
+        <th>Status</th>
+    </tr>
+        {% for product in orders %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>
+                    {% if product.status == 1 %}
+                        <button class="btn btn-sm btn-danger delete-order" data-order="{{product.p_id}}"><i class="fa fa-trash"></i> Delete</button>
+                    {% else %}
+                        <button class="btn btn-sm btn-danger delete-order" disabled data-order="{{product.p_id}}"><i class="fa fa-trash"></i> Delete</button>
+                    {% endif %}
+                </td>
+                <td><img src="{{product.image}}" class="shadow" width="50px" height="50px" style="border-radius: 5px;" /></td>
+                <td>{{product.name}}</td>
+                <td>{{product.size}}</td>
+                <td><span style="width: 80px; padding: 8px; background-color: {{product.color}}; border-radius: 2px;"></span></td>
+                <td>{{product.qty}}</td>
+                <td>NGN {{product.price}}</td>
+                <td>{{product.date}}</td>
+                <td>
+                    {% if product.status == 1 %}
+                        <div class="badge bg-success">
+                            <i class="fa fa-home"></i>
+                        </div>
+                    {% else %}
+                        <div class="badge bg-warning">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <p>You have no pending order</p>
+    {% endif %}
+</table>

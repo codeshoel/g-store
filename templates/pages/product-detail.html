@@ -8,12 +8,11 @@
     <div class="container-fluid my-5">
         <div class="col-md-12 p-5">
             <div class="row">
-                <div class="col-md-6 bg-light">
+                <div class="col-md-6">
                     <div class="row">
-                        <h3>{{product_detail.name}}</h3>
-                        <hr/>
+                        <h5>{{product_detail.name}}</h5>
                         <div class="col-md-6 mb-3">
-                            <img src="{{product_detail.productattribute_set.first.image.url}}">
+                            <img src="{{product_detail.productattribute_set.first.image.url}}" width="100%" height="100%">
                         </div>
                         <div class="col-md-12">
                             <div class="message alert alert-success" style="display: none;"></div>
@@ -75,6 +74,7 @@
                                                         <input type="hidden" class="product-id-{{product_detail.id}}" value="{{product_detail.id}}" />
                                                         <input type="hidden" class="product-image-{{product_detail.id}}" value="{{product_detail.productattribute_set.first.image.url}}" />
                                                         <input type="hidden" class="product-name-{{product_detail.id}}" value="{{product_detail.name}}" />
+                                                        <input type="hidden" class="product-category-{{product_detail.id}}" value="{{product_detail.category}}" />
                                                         <input type="hidden" class="product-slug-{{product_detail.id}}" value="product-id-{{product_detail.slug}}" />
                                                         <input type="hidden" class="product-total-price-{{product_detail.id}}" value="{{product_detail.productattribute_set.first.price}}" />
                                                         <input type="hidden" class="product-color-{{product_detail.id}}" value="{{product_detail.productattribute_set.first.color}}" />
@@ -84,8 +84,13 @@
                                                         </div>
                                                         <td>
                                                             <div class="button-group my-2" style="float: right; display: flex; justify-content: space-between;">
-                                                                <button type="submit" class="btn btn-sm btn-primary mx-1 addtocart-btn" data-product-id="{{product_detail.id}}">
-                                                                    <i class="fa fa-shopping-cart"></i> addTocart
+                                                                <button 
+                                                                    type="submit" 
+                                                                    class="btn btn-sm mx-1 addtocart-btn text-light" 
+                                                                    data-product-id="{{product_detail.id}}"
+                                                                    style="background: #19EDA2 !important;"
+                                                                    >
+                                                                    <i class="fa fa-shopping-cart"></i> AddToCart
                                                                 </button>
                                                             </div>
                                                         </td>
@@ -106,50 +111,41 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-md-6 bg-light">
-                    <h3>Other amazing related products</h3>
-                    <hr/>
+                <div class="col-md-6">
+                    <h5>Other amazing related products</h5>
                     {% if relate_products %}
                         <div class="row">
                             {% for relate_product in relate_products %}
                                 <div class="col-md-4">
                                     <a href="{% url 'product_detail_url' pk=relate_product.id %}" style="text-decoration: none;" class="text-secondary">
-                                        <div class="card-body shadow">
-                                                <span class="text-secondary">
-                                                    <b>NGN. {{relate_product.productattribute_set.first.price}}</b>
-                                                </span>
-                                                <img src="{{relate_product.productattribute_set.first.image.url}}" width="100px" height="150px">
-                                            <h6 class="" style="margin-bottom: -2px;">{{relate_product.name}}</h6>
-                                            <div class="col-md-9 text-warning mb-1" style="font-size: 14px">
-                                                <span class="text-secondary">
-                                                    <b>4/5</b>
-                                                </span>
+                                        <div class="card-body" style="box-shadow: 1px 1px 8px 0px rgba(3, 5, 2, .2); border-radius: 5px;">
+                                            <span class="text-secondary">
+                                                NGN{{relate_product.productattribute_set.first.price}}
+                                            </span>
+                                            <hr/>
+                                            <img class="product-img" src="{{relate_product.productattribute_set.first.image.url}}" width="150px" height="200px">
+                                            <h6 class=" my-3">{{relate_product.name}}</h6>
+                                            <div class="col-md-9 text-warning" style="font-size: 12px">
+                                                <span class="text-secondary"><b>4/5</b></span>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star-half"></i>
                                             </div>
-                                            <div class="card-text">
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-heart"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-primary">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </button>
-                                            </div>
+                                            <hr/>
                                         </div>
                                     </a>
                                 </div>
                             {% endfor %}
                         </div>
                     {% endif %}
-
-                    {% comment %} related product end {% endcomment %}
                 </div>
+                {% comment %} related product end {% endcomment %}
             </div>
         </div>
     </div>
-
+{% endblock %}
+{% block footer %}
     {% include '../incs/footer.html' %}
 {% endblock %}

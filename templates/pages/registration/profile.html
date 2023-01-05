@@ -8,20 +8,188 @@
     <div class="container-fluid">
         <div class="col-md-12 p-5">
             <div class="row my-5">
-                <div class="col-md-8" id="product_loader">
-                    {% comment %} products are loadered here using ajax {% endcomment %}
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            
+                        <div class="card-header">
+                            <i class="fa fa-cogs"></i> Profile
                         </div>
-                        <p></p>
-                        <div class="card-header">Shopping filter</div>
-                            <div class="card-body">
-                                
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <h3 class="mb-4">
+                                    <i class="fa fa-user"></i> Personal Info
+                                </h3>
+                                <div class="form-message"></div>
+                                {% if user %}
+                                    <form class="change-personal-info-form">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <label for="fname">First name</label>
+                                                <input 
+                                                type="text" 
+                                                name="fname"
+                                                id="fname"
+                                                class="form-control"
+                                                value="{{user.first_name}}"
+                                                required
+                                                placeholder="First Name" />
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="lname">Last name</label>
+                                                <input 
+                                                type="text" 
+                                                name="lname"
+                                                id="lname"
+                                                class="form-control"
+                                                value="{{user.last_name}}" 
+                                                required
+                                                placeholder="Last Name" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-3">
+                                            <div class="col-md-5">
+                                                <label for="email">E-mail</label>
+                                                <input 
+                                                type="email" 
+                                                name="email"
+                                                id="email"
+                                                class="form-control"
+                                                value="{{user.email}}"
+                                                required
+                                                placeholder="E-mail" />
+                                                <span class="email-error"></span>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="mobile">Mobile</label>
+                                                <input 
+                                                type="text" 
+                                                name="mobile"
+                                                id="mobile"
+                                                class="form-control"
+                                                value="{{user.mobile}}"
+                                                required
+                                                placeholder="Mobile" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-3">
+                                            <div class="col-md-5">
+                                                <label for="country">Country</label>
+                                                <input 
+                                                type="text" 
+                                                name="country"
+                                                id="country"
+                                                class="form-control"
+                                                value="{{user.country}}"
+                                                required
+                                                placeholder="Country of resident" />
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="city">City</label>
+                                                <input 
+                                                type="text" 
+                                                name="city"
+                                                id="city"
+                                                class="form-control"
+                                                value="{{user.city}}"
+                                                required
+                                                placeholder="City of resident" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-3">
+                                            <div class="col-md-10">
+                                                <label for="address">Delivery address</label>
+                                                <input
+                                                type="text" 
+                                                name="address"
+                                                id="address"
+                                                class="form-control"
+                                                value="{{user.address}}"
+                                                required
+                                                placeholder="Home address" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10" style="display: flex; align-items: right; justify-content: right;">
+                                            <button 
+                                                class="btn btn-sm btn-primary save-customer-info-btn"
+                                                style="margin-bottom: 20px;
+                                                        padding: 10px; 
+                                                        border: none;
+                                                        background-color: #19EDA2;
+                                                        color: #ffffff;
+                                                        font-weight: 500;
+                                                        float: right;
+                                                        box-shadow: 0px 3px 5px rgba(0, 0, 0, .3);
+                                                        "
+                                            >
+                                            <span class="spinner-border spinner-border-sm text-light change-profile-preloader" role="status" aria-hidden="true"></span>
+                                                <i class="fa fa-save"></i> Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                    {% endif %}
+                                <hr/>
+                                <h3 class="mb-3">
+                                    <i class="fa fa-key"></i> Security
+                                </h3>
+                                <form class="change-password-form">
+                                    <div id="change-password-msg"></div>
+                                    <div class="row my-4">
+                                        {% csrf_token %}
+                                        <div class="col-md-10 mb-3">
+                                            <input 
+                                            type="password" 
+                                            name="old_password"
+                                            id="old_password"
+                                            class="form-control" 
+                                            placeholder="Old Password"
+                                            required
+                                             />
+                                            <label for="country">Old Password</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input 
+                                            type="password" 
+                                            name="new_password"
+                                            id="new_password"
+                                            class="form-control" 
+                                            placeholder="New Password"
+                                            required
+                                             />
+                                            <label for="country">New Password</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input 
+                                            type="password" 
+                                            name="confirm_password"
+                                            id="confirm_password"
+                                            class="form-control"
+                                            placeholder="Confirm Password"
+                                            required
+                                             />
+                                            <label for="city">Confirm New Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10" style="display: flex; align-items: right; justify-content: right;">
+                                        <button 
+                                            class="btn btn-sm btn-primary change-password-btn"
+                                            style="
+                                            margin-bottom: 20px;
+                                            padding: 10px; 
+                                            border: none;
+                                            background-color: #19EDA2;
+                                            color: #ffffff;
+                                            font-weight: 500;
+                                            float: right;
+                                            box-shadow: 0px 3px 5px rgba(0, 0, 0, .3);"
+                                        >
+                                            <span class="spinner-border spinner-border-sm text-light change-password-preloader" role="status" aria-hidden="true"></span>
+                                            <i class="fa fa-key"></i> Save New Password
+                                        </button>
+                                    </div>
+                                </form>
+                                <hr/>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
