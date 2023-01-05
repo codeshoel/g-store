@@ -1,0 +1,160 @@
+{% extends '../incs/base.html' %}
+{% load static %}
+
+{% block title %} Admin {% endblock title %}
+
+
+{% block content %}
+    {% include '../incs/navbar.html' %}
+    <div class="container-fluid admin-container my-5">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2">
+                    {% comment %} side navigation bar {% endcomment %}
+                    {% include '../incs/sidenav.html' %}
+                </div>
+                <div class="col-md-10">
+                    <div class="col-md-12 my-5">
+                        <h3>
+                            Customers<hr/>
+                        </h3>
+                        
+                        <div class="card-body">
+                            <div class="row">
+
+
+                                {% comment %} <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-dark text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Sales</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-bank" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>1.2M <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> {% endcomment %}
+
+                                <div class="col-md-3 my-3">
+                                    <div class="card">
+                                        <div class="col-md-12 p-2">
+                                            <div class="row">
+                                                <div class="col-md-12 d-flex justify-content-center">
+                                                    <h5 class="card-title">Customer Name</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center">
+                                            <i class="fa fa-user-circle text-secondary" style="font-size: 80px;"></i>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="btn btn-sm btn-success w-100">
+                                                <i class="fa fa-shopping-cart"></i> Orders
+                                                <small class="text-warning">10</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-3">
+                                    <div class="card">
+                                        <div class="col-md-12 p-2">
+                                            <div class="row">
+                                                <div class="col-md-12 d-flex justify-content-center">
+                                                    <h5 class="card-title">Customer Name</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center">
+                                            <i class="fa fa-user-circle text-secondary" style="font-size: 80px;"></i>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="btn btn-sm btn-success w-100">
+                                                <i class="fa fa-shopping-cart"></i> Orders
+                                                <small class="text-warning">10</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-3">
+                                    <div class="card">
+                                        <div class="col-md-12 p-2">
+                                            <div class="row">
+                                                <div class="col-md-12 d-flex justify-content-center">
+                                                    <h5 class="card-title">Customer Name</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center">
+                                            <i class="fa fa-user-circle text-secondary" style="font-size: 80px;"></i>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="btn btn-sm btn-success w-100">
+                                                <i class="fa fa-shopping-cart"></i> Orders
+                                                <small class="text-warning">10</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-3">
+                                    <div class="card">
+                                        <div class="col-md-12 p-2">
+                                            <div class="row">
+                                                <div class="col-md-12 d-flex justify-content-center">
+                                                    <h5 class="card-title">Customer Name</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center">
+                                            <i class="fa fa-user-circle text-secondary" style="font-size: 80px;"></i>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="btn btn-sm btn-success w-100">
+                                                <i class="fa fa-shopping-cart"></i> Orders
+                                                <small class="text-warning">10</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 my-3">
+                                    <div class="card">
+                                        <div class="col-md-12 p-2">
+                                            <div class="row">
+                                                <div class="col-md-12 d-flex justify-content-center">
+                                                    <h5 class="card-title">Customer Name</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center">
+                                            <i class="fa fa-user-circle text-secondary" style="font-size: 80px;"></i>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="btn btn-sm btn-success w-100">
+                                                <i class="fa fa-shopping-cart"></i> Orders
+                                                <small class="text-warning">10</small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../incs/scripts.html' %}
+{% endblock content %}
+    

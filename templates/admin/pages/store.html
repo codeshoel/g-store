@@ -1,0 +1,139 @@
+{% extends '../incs/base.html' %}
+{% load static %}
+
+{% block title %} Admin {% endblock title %}
+
+
+{% block content %}
+    {% include '../incs/navbar.html' %}
+    <div class="container-fluid admin-container my-5">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2">
+                    {% comment %} side navigation bar {% endcomment %}
+                    {% include '../incs/sidenav.html' %}
+                </div>
+                <div class="col-md-10">
+                    <div class="col-md-12 my-5">
+                        <h3>
+                            Store Products<hr/>
+                        </h3>
+                        
+                        <div class="card-body">
+                            <div class="row">
+
+
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-secondary text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Products</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-building" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>1K <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="col-md-12">
+                                <table class="table table-responsive table-hover">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Action</th>
+                                        <th>Photo</th>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Category</th>
+                                        <th>Size</th>
+                                        <th>Color</th>
+                                        <th>In-Stock</th>
+                                        <th>Total Sales</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="group-button">
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-warning">
+                                                    <i class="fa fa-eye-slash"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <img src="jp.png" />
+                                        </td>
+                                        <td>Product title</td>
+                                        <td>NGN1500</td>
+                                        <td>category</td>
+                                        <td>
+                                            <span class="badge bg-secondary">L</span>
+                                            <span class="badge bg-secondary">M</span>
+                                            <span class="badge bg-secondary">S</span>
+                                            <span class="badge bg-secondary">LX</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-danger">Red</span>
+                                        </td>
+                                        <td>50</td>
+                                        <td>1K</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="group-button">
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-warning">
+                                                    <i class="fa fa-eye-slash"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <img src="jp.png" />
+                                        </td>
+                                        <td>Product title</td>
+                                        <td>NGN1500</td>
+                                        <td>category</td>
+                                        <td>
+                                            <span class="badge bg-secondary">L</span>
+                                            <span class="badge bg-secondary">M</span>
+                                            <span class="badge bg-secondary">S</span>
+                                            <span class="badge bg-secondary">LX</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-danger">Red</span>
+                                        </td>
+                                        <td>50</td>
+                                        <td>1K</td>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../incs/scripts.html' %}
+{% endblock content %}
+    

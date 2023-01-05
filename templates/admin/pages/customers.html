@@ -1,0 +1,86 @@
+{% extends '../incs/base.html' %}
+{% load static %}
+
+{% block title %} Admin {% endblock title %}
+
+
+{% block content %}
+    {% include '../incs/navbar.html' %}
+    <div class="container-fluid admin-container my-5">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2">
+                    {% comment %} side navigation bar {% endcomment %}
+                    {% include '../incs/sidenav.html' %}
+                </div>
+                <div class="col-md-10">
+                    <div class="col-md-12 my-5">
+                        <h3>
+                            Customers<hr/>
+                        </h3>
+                        
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 my-2">
+                                    <div class="card p-2 bg-primary text-light">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4>Customers</h4>
+                                                    <hr/>
+                                                    <i class="fa fa-users" style="font-size: 50px;"></i>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>150 <hr/></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 p-3">
+                            <table class="table table-responsive table-hover">
+                                <thead>
+                                    <th>#</th>
+                                    <th>Action</th>
+                                    <th>Full name</th>
+                                    <th>E-mail</th>
+                                    <th>Mobile</th>
+                                    <th>Country</th>
+                                    <th>City</th>
+                                    <th>Joined</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="button-group">
+                                                <button class="btn btn-sm btn-outline-warning">
+                                                    <i class="fa fa-eye-slash"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>Gabriel Jacob</td>
+                                        <td>gjsnickz@gmail.com</td>
+                                        <td>07033109715</td>
+                                        <td>Nigeria</td>
+                                        <td>Abuja</td>
+                                        <td>Jan, 04 2023</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '../incs/scripts.html' %}
+{% endblock content %}
+    
